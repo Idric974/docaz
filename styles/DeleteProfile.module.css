@@ -1,0 +1,52 @@
+.box,
+.usersName,
+.titleBox,
+.title,
+.inconeBox,
+.iconeText {
+  /* border: solid green 3px; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/** Titre de la page **/
+
+.titleBox {
+  /* border: solid red 1px; */
+  width: 100%;
+  flex-direction: row;
+  padding: 10px 0px 10px 0px;
+  border-bottom: solid 1px black;
+}
+
+.title {
+  /* border: solid green 1px; */
+  width: 80%;
+  flex-direction: row;
+  font-family: var(--fonte);
+  font-size: 2rem;
+  color: red;
+}
+
+.inconeBox {
+  /* border: solid green 1px; */
+  width: 20%;
+}
+
+.incone {
+  /* border: solid green 1px; */
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconeText {
+  width: 100%;
+  flex-direction: row;
+  font-size: 0.5rem;
+}

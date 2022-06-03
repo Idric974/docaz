@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
+.box {
+  /* border: solid red 1px; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 10px 0px 15px 0px;
+  background-color: white;
+}
+
+.logoText {
+  font-size: 3.5rem;
+  color: var(--Primary);
+  font-family: 'Russo One', sans-serif;
+}

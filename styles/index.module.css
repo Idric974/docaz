@@ -1,0 +1,70 @@
+.box,
+.appMenu,
+.appBody,
+.menuIconTexte {
+  /* border: solid green 5px;
+  height: 100vh; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.appMenu {
+  /* border: solid green 3px; */
+  flex-direction: row;
+  justify-content: space-around;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
+  background-color: white;
+  border-bottom: solid black 1px;
+  padding-bottom: 10px;
+}
+
+.appBody {
+  height: 800px;
+  /* border: solid red 3px; */
+}
+
+.tab {
+  /* border: solid green 5px; */
+  width: 24%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px 8px 0px 0px;
+  padding: 5px 5px 5px 5px;
+  background-color: var(--Primary);
+  color: white;
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: white;
+  cursor: pointer;
+}
+
+.tabOff {
+  /* border: solid green 5px; */
+  width: 24%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px 10px 0px 0px;
+  padding: 5px 5px 5px 5px;
+  border: solid 1px var(--Primary);
+  color: white;
+  margin: 1px 0px 0px 0px;
+  font-size: 1.3rem;
+  color: black;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+}
+
+.menuIcon {
+  font-size: 1.3rem;
+}
+.menuIconTexte {
+}

@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
+.box,
+.formTitle,
+.formInputBox,
+.formInput,
+.formInputImage,
+.formInputButtonBox,
+.formInputButton,
+.formItems,
+.prewieuImageBox,
+.prewieuImage {
+  /* border: solid red 1px; */
+  /* height: 100vh;  */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+}
+
+.box {
+  border-top: solid var(--Primary) 2px;
+}
+
+.formItems {
+  margin-top: 20px;
+}
+
+.formInputLabel {
+  /* border: solid green 1px; */
+  margin-left: 5px;
+}
+
+.formInput,
+.formInputImage {
+  /* border: solid red 1px; */
+  align-items: flex-start;
+}
+
+.formInputImage {
+  /* border: solid red 1px; */
+  width: 100%;
+}
+
+.inputImage {
+  /* border: solid red 1px; */
+  width: 100%;
+}
+
+.formInputButtonBox {
+  margin: auto;
+}
+
+.formInputButton {
+  background-color: var(--Primary);
+}

@@ -1,0 +1,247 @@
+.box {
+  /* height: 300px; */
+  /* border: solid red 1px; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 0px 10px 0px;
+  padding: 0px 0px 10px 0px;
+  /* box-shadow: var(--shadow); */
+  /* border-radius: 10px; */
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+}
+
+.cards {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userInfo {
+  /* border: solid red 1px; */
+  width: 98%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0px 5px 0px;
+  border-bottom: solid black 1px;
+  padding-bottom: 5px;
+}
+
+/** User  Box **/
+
+.userImageBox {
+  /* border: solid green 1px; */
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 3px;
+}
+
+.userImage {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  border-radius: 50%;
+}
+
+.pseudoDateBox {
+  /* border: solid green 1px; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0px 0px 0px 5px;
+}
+
+.userpseudo {
+  /* border: solid green 1px; */
+  width: 100%;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.postDate {
+  /* border: solid green 1px; */
+  width: 100%;
+}
+
+.lieuxBox {
+  /* border: solid green 1px; */
+  width: 100%;
+}
+
+.userpseudo,
+.postDate,
+.lieuxBox {
+  padding: 2px 0px 2px 0px;
+}
+
+.phoneBox {
+  /* border: solid green 1px; */
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-right: 5px;
+}
+
+.phoneIncone {
+  /* border: solid green 1px; */
+  width: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 3rem;
+  color: var(--Primary);
+}
+
+.phoneCta {
+  padding-top: 5px;
+  font-size: 1rem;
+}
+
+/********** Corps du post **********/
+
+.postBody {
+  /* border: solid green 1px; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.postName {
+  /* border: solid green 1px; */
+  width: 100%;
+  padding: 10px 0px 15px 5px;
+  font-size: 2rem;
+  font-weight: bold;
+  flex-direction: column;
+  align-items: center;
+  justify-content: left;
+}
+
+.postBrand {
+  /* border: solid green 1px; */
+  width: 100%;
+  padding: 5px 0px 5px 5px;
+  font-size: 1.3rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: left;
+}
+
+.postModel {
+  /* border: solid green 1px; */
+  width: 100%;
+  padding: 5px 0px 15px 5px;
+  font-size: 1.3rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: left;
+}
+
+.postDescription {
+  /* border: solid green 1px; */
+  width: 100%;
+  padding: 5px 0px 15px 5px;
+  font-size: 1.3rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: left;
+  line-height: 25px;
+}
+
+.postPictureBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.postPicture {
+  /* border: solid green 1px; */
+  width: 99%;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+
+/** Like barre  **/
+
+.likeBarBox {
+  /* border: solid red 1px; */
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-between;
+  border-radius: 0px 0px 10px 10px;
+}
+
+.likeIconeBox {
+  /* border: solid green 1px; */
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-between;
+}
+
+.likeIcone {
+  /* border: solid blue 1px; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: var(--Primary);
+}
+
+.nbLike {
+  /* border: solid blue 1px; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5rem;
+  color: var(--Primary);
+}
+
+.like {
+  /* border: solid green 1px; */
+  width: 100%;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.favoris {
+  /* border: solid green 1px; */
+  width: 100%;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: red;
+}

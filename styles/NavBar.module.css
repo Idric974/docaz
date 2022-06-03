@@ -1,0 +1,57 @@
+.box {
+  /* border: solid green 1px; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  /* bottom: 0; */
+  background-color: white;
+  margin-bottom: -8px;
+}
+
+.masterMenu {
+  /* border: solid red 3px; */
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+/** Menu avec les icones. **/
+
+.menuIconeBox {
+  /* border: solid green 1px; */
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  padding: 15px 0px 10px 0px;
+  border-bottom: solid black 1px;
+}
+
+.menuIcone {
+  /* border: solid green 1px; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* margin: 10px 0px 10px 0px; */
+  font-size: 1.8rem;
+}
+
+.menuIconePub,
+.menuIconTextePub {
+  color: var(--Primary);
+}
+
+.menuIconTexte,
+.menuIconTextePub {
+  font-size: 0.9rem;
+  margin: 3px 0px 5px 0px;
+}

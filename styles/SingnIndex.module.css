@@ -1,0 +1,27 @@
+.box,
+.boxTab {
+  /* border: solid red 1px;
+  height: 100vh; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+}
+
+.boxTab {
+  /* border: solid red 1px; */
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-size: 2rem;
+}
+
+.tab {
+  /* border: solid green 1px; */
+  border-radius: 10px 10px 0px 0px;
+  padding: 5px 5px 5px 5px;
+  background-color: var(--Primary);
+  color: white;
+  margin: 10px 0px 0px 0px;
+}

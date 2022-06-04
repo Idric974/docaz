@@ -16,3 +16,7 @@
   color: var(--Primary);
   font-family: 'Russo One', sans-serif;
 }
+
+/* .logoText:nth-letter(2) {
+  color: var(Secondary);
+} */

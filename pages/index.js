@@ -60,7 +60,7 @@ export default function Home(props) {
       setfavoritesModal(false);
       setAccountModal(false);
       console.log('ID ===> ', e.target.id);
-    } else if (e.target.id === '[favoriteseId') {
+    } else if (e.target.id === 'favoriteseId') {
       setThreadModal(false);
       setPostHandlerModal(false);
       setfavoritesModal(true);
@@ -85,7 +85,9 @@ export default function Home(props) {
           onClick={handleModals}
           id="AccueilId"
         >
-          {<FontAwesomeIcon icon={faHouse} />}
+          <p className={styles.iconFont}>
+            {<FontAwesomeIcon icon={faHouse} />}
+          </p>
           {'Accueil'}
         </div>
 
@@ -94,7 +96,9 @@ export default function Home(props) {
           onClick={handleModals}
           id="postId"
         >
-          {<FontAwesomeIcon icon={faArrowsToCircle} />}
+          <p className={styles.iconFont}>
+            {<FontAwesomeIcon icon={faArrowsToCircle} />}
+          </p>
           {'Publier'}
         </div>
 
@@ -103,7 +107,9 @@ export default function Home(props) {
           onClick={handleModals}
           id="favoriteseId"
         >
-          {<FontAwesomeIcon icon={faHeart} />}
+          <p className={styles.iconFont}>
+            {<FontAwesomeIcon icon={faHeart} />}
+          </p>
           {'Favoris'}
         </div>
         <div
@@ -111,7 +117,7 @@ export default function Home(props) {
           onClick={handleModals}
           id="accountId"
         >
-          {<FontAwesomeIcon icon={faUser} />}
+          <p className={styles.iconFont}>{<FontAwesomeIcon icon={faUser} />}</p>
           {'Compte'}
         </div>
       </div>

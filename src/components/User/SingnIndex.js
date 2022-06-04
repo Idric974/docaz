@@ -16,7 +16,7 @@ const SingnIndex = (props) => {
   //? I) Récupéra Le profile de l'utilisateur connecté.
 
   const userData = useSelector((state) => state.userCRUDReducer);
-  console.log('userData', userData);
+  // console.log('userData', userData);
 
   //? --------------------------------------------------
 
@@ -44,27 +44,29 @@ const SingnIndex = (props) => {
           {readProfilModal && <ReadProfil />}
         </div>
       ) : (
-        <div className={styles.boxTab}>
-          <div
-            className={signUpModal ? styles.tab : null}
-            onClick={handleModals}
-            id="register"
-          >
-            {"S'inscrire"}
+        <div>
+          <div className={styles.boxTab}>
+            <div
+              className={signUpModal ? styles.tab : null}
+              onClick={handleModals}
+              id="register"
+            >
+              {"S'inscrire"}
+            </div>
+
+            <div
+              className={signInModal ? styles.tab : null}
+              onClick={handleModals}
+              id="login"
+            >
+              {'Se connecter'}
+            </div>
           </div>
 
-          <div
-            className={signInModal ? styles.tab : null}
-            onClick={handleModals}
-            id="login"
-          >
-            {'Se connecter'}
-          </div>
+          {signUpModal && <SignUp />}
+          {signInModal && <SignIn />}
         </div>
       )}
-
-      {signUpModal && <SignUp />}
-      {signInModal && <SignIn />}
     </div>
   );
 };

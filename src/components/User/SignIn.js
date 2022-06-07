@@ -29,6 +29,7 @@ const SignIn = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log('User connected', user);
+        window.location = '/';
       })
       .catch((error) => {
         const errorCode = error.code;

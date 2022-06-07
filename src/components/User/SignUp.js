@@ -138,6 +138,8 @@ const SignUp = () => {
               // console.log('data ===>', data);
 
               dispatch(createUser(data));
+
+              window.location = '/';
             })
 
             //? Cath des erreurs

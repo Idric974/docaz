@@ -129,7 +129,7 @@ const PostHandler = () => {
 
   return (
     <div className={styles.box}>
-      <h1>CompPosterAnnonce2</h1>
+      <h1>Poster annonce</h1>
 
       <div className={styles.PostForm}>
         <input
@@ -214,9 +214,6 @@ const PostHandler = () => {
 
             {/** Téléphone **/}
             <div>{phone}</div>
-
-            {/** Image de l'auteur **/}
-            <div>{photoURL}</div>
 
             {/** Nom de l'article **/}
             <div>{articleName}</div>

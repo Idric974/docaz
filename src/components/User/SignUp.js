@@ -14,16 +14,20 @@ const SignUp = () => {
   //! Les constantes.
 
   //? Create user.
+
   const registerFirstName = useRef();
   const registerLastName = useRef();
   const registerUserName = useRef();
   const registerPhone = useRef();
   const registerTown = useRef();
+
   //? -------------------------------------------------
 
   //? Create user.
+
   const registerEmail = useRef();
   const registerPassword = useRef();
+
   //? -------------------------------------------------
 
   const [imageUpload, setimageUpload] = useState(null);

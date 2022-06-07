@@ -6,10 +6,24 @@ export const READ_ALL_POSTS = 'READ_ALL_POSTS';
 export const addPost = (data) => {
   return async (dispatch) => {
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_ANALYTICS_URL}`, data);
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_ANALYTICS_URL}api/post/`,
+        data
+      );
+
+      console.log(
+        "%c ✅ SUCCÈS : post.action ==> ADD_POST ==> création d'un post :",
+        'color: green',
+        res.data
+      );
+
       dispatch({ type: ADD_POST, payload: data });
     } catch (err) {
-      return console.log(err);
+      return console.log(
+        "%c ❌ ERREUR : post.action ==> ADD_POST ==> création d'un post :",
+        'color: red',
+        err
+      );
     }
   };
 };

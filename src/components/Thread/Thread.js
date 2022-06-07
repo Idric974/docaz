@@ -25,7 +25,7 @@ const Thread = () => {
       <ul className={styles.postBoxDiv}>
         {!isEmpty(posts[0]) &&
           posts.map((post) => {
-            return <Card post={post} key={post._id} />;
+            return <Card post={post} key={post.imageUrl} />;
           })}
       </ul>
     </div>

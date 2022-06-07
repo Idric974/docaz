@@ -1,0 +1,60 @@
+.box {
+  /* height: 300px;
+  border: solid red 1px; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.PostForm {
+  /* border: solid green 3px; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputTitle {
+  /* border: solid green 3px; */
+}
+
+.inputMessage {
+  /* border: solid green 3px; */
+  width: 100%;
+  height: 300px;
+}
+
+.inputImageBox {
+  /* border: solid red 1px; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputImage {
+  /* border: solid green 3px; */
+  width: 100%;
+}
+
+.postButton {
+  width: 100%;
+  padding: 10px 10px 10px 10px;
+}
+
+.messagePreview {
+  border: solid red 1px;
+  width: 100%;
+  margin: 10px 0px 10px 0px;
+}
+
+.prewieuImageBox {
+  width: 100%;
+}
+
+.prewieuImage {
+  width: 100%;
+}

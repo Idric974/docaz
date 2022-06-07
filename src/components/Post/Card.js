@@ -65,7 +65,7 @@ const Card = ({ post }) => {
               <div className={styles.userImageBox}>
                 <img
                   className={styles.userImage}
-                  src={post.userImage}
+                  src={post.photoURL}
                   alt={post.userPseudo}
                 />
               </div>
@@ -73,7 +73,7 @@ const Card = ({ post }) => {
               {/** Pseudo de l'utilisateur **/}
               <div className={styles.pseudoDateBox}>
                 {/** Pseudo de l'utilisateur **/}
-                <div className={styles.userpseudo}>{post.userPseudo}</div>
+                <div className={styles.userpseudo}>{post.userName}</div>
 
                 {/** Ville ou est disponible l'article **/}
                 <div className={styles.lieuxBox}>

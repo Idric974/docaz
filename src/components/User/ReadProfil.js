@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from 'react';
 import styles from '../../../styles/UpdateProfile.module.css';
-import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { getAuth, signOut } from 'firebase/auth';
 
 library.add(faRightFromBracket);
 
@@ -47,13 +47,32 @@ const ReadProfil = () => {
 
   //? --------------------------------------------------
 
+  //! -------------------------------------------------
+
+  //! Déconnexion de l'utilisateur connecté.
+
+  const userOut = async (e) => {
+    e.preventDefault();
+
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        console.log('Sign-out successful');
+        window.location = '/';
+      })
+      .catch((error) => {
+        console.log('An error happened');
+      });
+  };
+  //! -------------------------------------------------
+
   return (
     <div className={styles.box}>
       {/** Titre de la page **/}
       <div className={styles.titleBox}>
         <div className={styles.title}>Modifier Compte</div>
 
-        <div className={styles.inconeBox}>
+        <div onClick={userOut} className={styles.inconeBox}>
           <p className={styles.icone}>
             <FontAwesomeIcon icon={faRightFromBracket} />
           </p>

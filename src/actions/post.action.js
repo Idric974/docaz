@@ -37,11 +37,11 @@ export const readAllPost = () => {
         `${process.env.NEXT_PUBLIC_ANALYTICS_URL}api/post/readAllPosts`
       );
 
-      console.log(
-        '%c ✅ SUCCÈS posts.action ===> READ_ALL_POSTS ===> Liste de tous les posts :',
-        'color: green',
-        res.data
-      );
+      // console.log(
+      //   '%c ✅ SUCCÈS posts.action ===> READ_ALL_POSTS ===> Liste de tous les posts :',
+      //   'color: green',
+      //   res.data
+      // );
 
       dispatch({ type: READ_ALL_POSTS, payload: res.data });
     } catch (err) {

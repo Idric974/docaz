@@ -49,8 +49,8 @@ export const readUser = (firebaseUi) => {
 
       // console.log(
       //   "✅ %c SUCCÈS userCRUD.actions ==> READ_USER ==> afficher l'utilisateur connecté :",
-      //   'color: red',
-      //   res.data
+      //   'color: green',
+      //   res.statusText
       // );
 
       dispatch({ type: READ_USER, payload: res.data });

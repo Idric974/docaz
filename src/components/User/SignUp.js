@@ -3,7 +3,6 @@ import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from '../../../styles/SingUpIn.module.css';
 import { createUser } from '../../actions/userCRUD.actions';
-import { auth } from '../../firebase.config';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../firebase';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
@@ -139,7 +138,7 @@ const SignUp = () => {
 
               dispatch(createUser(data));
 
-              window.location = '/';
+              // window.location = '/';
             })
 
             //? Cath des erreurs

@@ -28,15 +28,31 @@ const SignIn = () => {
     )
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log('User connected', user);
-        window.location = '/';
+
+        console.log(
+          '%c ✅ SUCCÈS SignIn ===> User connected :',
+          'color: green',
+          user
+        );
+
+        // window.location = '/';
       })
       .catch((error) => {
         const errorCode = error.code;
-        console.log('errorCode', errorCode);
+
+        console.log(
+          '%c ❌ ERREUR : SignIn ===> User connected : :',
+          'color: red',
+          errorCode
+        );
 
         const errorMessage = error.message;
-        console.log('errorMessage', errorMessage);
+
+        console.log(
+          '%c ❌ ERREUR : SignIn ===> errorMessage : :',
+          'color: red',
+          errorMessage
+        );
       });
   }
 

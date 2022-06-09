@@ -16,7 +16,7 @@ const ReadProfil = () => {
   //? I) Récupéra Le profile de l'utilisateur connecté.
 
   const userData = useSelector((state) => state.userCRUDReducer);
-  // console.log('userData', userData);
+  console.log('userData', userData);
 
   //? --------------------------------------------------
 

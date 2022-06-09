@@ -53,25 +53,21 @@ export default function Home(props) {
       setPostHandlerModal(false);
       setfavoritesModal(false);
       setAccountModal(false);
-      console.log('ID ===> ', e.target.id);
     } else if (e.target.id === 'postId') {
       setThreadModal(false);
       setPostHandlerModal(true);
       setfavoritesModal(false);
       setAccountModal(false);
-      console.log('ID ===> ', e.target.id);
     } else if (e.target.id === 'favoriteseId') {
       setThreadModal(false);
       setPostHandlerModal(false);
       setfavoritesModal(true);
       setAccountModal(false);
-      console.log('ID ===> ', e.target.id);
     } else if (e.target.id === 'accountId') {
       setThreadModal(false);
       setPostHandlerModal(false);
       setfavoritesModal(false);
       setAccountModal(true);
-      console.log('ID ===> ', e.target.id);
     }
   };
 

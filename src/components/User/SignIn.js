@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useRef } from 'react';
-import styles from '../../../styles/SingUpIn.module.css';
+import styles from '../../../styles/SignIn.module.css';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 const SignIn = () => {
@@ -10,6 +10,7 @@ const SignIn = () => {
 
   const registerEmail = useRef();
   const registerPassword = useRef();
+  const auth = getAuth();
 
   //! -------------------------------------------------
 
@@ -20,7 +21,6 @@ const SignIn = () => {
     console.log('Email : ', registerEmail.current.value);
     console.log('Password : ', registerPassword.current.value);
 
-    const auth = getAuth();
     signInWithEmailAndPassword(
       auth,
       registerEmail.current.value,
@@ -30,12 +30,12 @@ const SignIn = () => {
         const user = userCredential.user;
 
         console.log(
-          '%c ✅ SUCCÈS SignIn ===> User connected :',
+          '%c ✅ SUCCÈS : SignIn ===> User connected :',
           'color: green',
           user
         );
 
-        // window.location = '/';
+        window.location = '/';
       })
       .catch((error) => {
         const errorCode = error.code;

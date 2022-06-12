@@ -11,7 +11,7 @@ const UpdateProfile = () => {
     <div className={styles.box}>
       {/** Titre de la page **/}
       <div className={styles.titleBox}>
-        <div className={styles.title}>Modifier Compte</div>
+        <div className={styles.title}>Mes informations</div>
 
         <div className={styles.inconeBox}>
           <p className={styles.icone}>

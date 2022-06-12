@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import styles from '../../../styles/SingUpIn.module.css';
+import styles from '../../../styles/SingUp.module.css';
 import { createUser } from '../../actions/userCRUD.actions';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../firebase';
@@ -42,6 +42,7 @@ const SignUp = () => {
   let uid;
   let date = new Date().getTime();
   let photoURL;
+  let userImageFileName;
 
   //! -------------------------------------------------
 
@@ -86,7 +87,10 @@ const SignUp = () => {
       .then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
           //
-          console.log('imageUrl ===> ', url);
+          userImageFileName = snapshot.ref._location.path_;
+          // console.log('userImageFileName ===> ', userImageFileName);
+
+          //console.log('imageUrl ===> ', url);
           photoURL = url;
         });
       })
@@ -126,6 +130,7 @@ const SignUp = () => {
             .then(() => {
               data = {
                 userId: uid,
+                userImageFileName: userImageFileName,
                 firstName: registerFirstName.current.value,
                 lastName: registerLastName.current.value,
                 userName: registerUserName.current.value,
@@ -138,7 +143,7 @@ const SignUp = () => {
 
               dispatch(createUser(data));
 
-              // window.location = '/';
+              window.location = '/';
             })
 
             //? Cath des erreurs

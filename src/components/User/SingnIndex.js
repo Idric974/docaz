@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../../../styles/SingnIndex.module.css';
 import { useSelector } from 'react-redux';
-import ReadProfil from './ReadProfil';
+import ReadProfileIndex from './ReadProfileIndex';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
 
 const SingnIndex = (props) => {
+  //
   const [signUpModal, setSignUpModal] = useState(props.signup);
   const [signInModal, setSignInModal] = useState(props.signin);
-  const [readProfilModal, setReadProfilModal] = useState(props.readProfil);
+  const [readProfileIndexModal, setReadProfileIndexModal] = useState(
+    props.readProfil
+  );
 
   //
   //! I) Affichage des informations concernant l'utilisateur connecté.
@@ -22,11 +25,11 @@ const SingnIndex = (props) => {
 
   useEffect(() => {
     if (userData) {
-      setReadProfilModal(true);
+      setReadProfileIndexModal(true);
     } else {
       setSignUpModal(true);
     }
-  }, [userData]);
+  }, [readProfileIndexModal, userData]);
 
   const handleModals = (e) => {
     if (e.target.id === 'register') {
@@ -37,11 +40,12 @@ const SingnIndex = (props) => {
       setSignInModal(true);
     }
   };
+
   return (
     <div className={styles.box}>
       {userData ? (
         <div className={styles.profileBox}>
-          {readProfilModal && <ReadProfil />}
+          {readProfileIndexModal && <ReadProfileIndex />}
         </div>
       ) : (
         <div>

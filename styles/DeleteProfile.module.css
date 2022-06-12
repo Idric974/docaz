@@ -3,7 +3,12 @@
 .titleBox,
 .title,
 .inconeBox,
-.iconeText {
+.iconeText,
+.deleteBox,
+.boxTitle,
+.boxText,
+.deleteButtonBox,
+.deleteButton {
   /* border: solid green 3px; */
   width: 100%;
   display: flex;
@@ -49,4 +54,37 @@
   width: 100%;
   flex-direction: row;
   font-size: 0.5rem;
+}
+
+.deleteBox {
+  /* border: solid green 3px; */
+  width: 98%;
+  box-shadow: var(--shadow);
+  margin: 10px 0px 10px 0px;
+  border-radius: 5px;
+}
+
+.boxTitle {
+  font-size: 2rem;
+  color: var(--Primary);
+  padding: 20px 0px 20px 0px;
+  font-family: 'Russo One', sans-serif;
+}
+
+.boxText {
+  font-size: 1.5rem;
+  line-height: 30px;
+  margin: 10px 0px 10px 0px;
+}
+
+.deleteButton {
+  width: 50%;
+  background: var(--Primary);
+  color: white;
+}
+
+.deleteButton:hover {
+  background: red;
+  color: black;
+  font-weight: bolder;
 }

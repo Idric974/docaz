@@ -39,12 +39,15 @@ function MyApp({ Component, pageProps }) {
         setFirebaseUi(user.uid);
 
         console.log(
-          '%c ✅ SUCCÈS User Id ==> _app.js ==> ',
+          '%c ✅ SUCCÈS ==> _app.js ==> ID de l"utilisateur connecté : ',
           'color: green',
           firebaseUi
         );
       } else {
-        console.log('%c ERREUR : No user connected', 'color:red');
+        console.log(
+          '%c ❌  ERREUR ==> _app ==> No user connected',
+          'color:orange'
+        );
       }
     });
   };

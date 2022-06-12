@@ -3,7 +3,7 @@ import axios from 'axios';
 export const CREATE_USER = 'CREATE_USER';
 export const READ_USER = 'READ_USER';
 export const UPDATE_USER = 'UPDATE_USER';
-export const DELETE_USERS = 'DELETE_USERS';
+export const DELETE_USER = 'DELETE_USER';
 
 //! Logique pour la création d'un nouvel utilisateur.
 
@@ -58,6 +58,37 @@ export const readUser = (firebaseUi) => {
       return console.log(
         "❌ %c ERREUR : userCRUD.actions ==> READ_USER ==> afficher l'utilisateur connecté :",
         'color : red',
+        err
+      );
+    }
+  };
+};
+
+//! -------------------------------------------------
+
+//! Logique pour la création d'un nouvel utilisateur.
+
+export const deleteOneUser = (uid) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_ANALYTICS_URL}api/user/deleteOneUser`,
+        uid
+      );
+
+      console.log(
+        "%c ✅ SUCCÈS : userCRUD.actions ==> DELETE_USER ==> création d'un utilisateur :",
+        'color: green',
+        res.data
+      );
+
+      dispatch({ type: DELETE_USER, payload: res.data });
+
+      // window.location = '/';
+    } catch (err) {
+      return console.log(
+        "%c ❌ ERREUR : userCRUD.actions ==> DELETE_USER ==> création d'un utilisateur :",
+        'color: red',
         err
       );
     }

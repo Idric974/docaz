@@ -35,7 +35,16 @@ const SignIn = () => {
           user
         );
 
-        window.location = '/';
+        document.getElementById('signInError').innerHTML =
+          "Connexion réussi, vous allez être redirigé ver la page d'accueil";
+        document.getElementById('signInError').style.color = 'green';
+        document.getElementById('signInError').style.fontSize = '1.5rem';
+
+        setTimeout(() => {
+          window.location = '/';
+        }, 5000);
+
+        //
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -53,6 +62,11 @@ const SignIn = () => {
           'color: red',
           errorMessage
         );
+
+        document.getElementById('signInError').innerHTML =
+          'Le mot de passe ou l’identifiant saisi est incorrecte';
+        document.getElementById('signInError').style.color = 'red';
+        document.getElementById('signInError').style.fontSize = '1.5rem';
       });
   }
 
@@ -83,6 +97,8 @@ const SignIn = () => {
             value="Connexion"
           />
         </div>
+
+        <div id="signInError" className={styles.errorMessage}></div>
       </form>
     </div>
   );

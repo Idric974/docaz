@@ -2,9 +2,8 @@ import React from 'react';
 import styles from '../../../styles/DeleteProfile.module.css';
 import { getAuth, deleteUser } from 'firebase/auth';
 import { getStorage, ref, deleteObject } from 'firebase/storage';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import deleteOneUser from '../../actions/userCRUD.actions';
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteOneUser } from '../../actions/userCRUD.actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
@@ -23,8 +22,10 @@ const DeleteProfile = () => {
 
   const auth = getAuth();
   const user = auth.currentUser;
-  console.log('user ===> ', user.uid);
-  uid = user.uid;
+  if (user) {
+    console.log('currentUser ===> ', user.uid);
+    uid = user.uid;
+  }
 
   const storage = getStorage();
   const dispatch = useDispatch();
@@ -81,7 +82,11 @@ const DeleteProfile = () => {
       //? Suppression de information concernant l’utilisateur connecté.
 
       .then(() => {
-        dispatch(deleteOneUser(uid));
+        if (uid) {
+          console.log('uid dispatché ===> ', uid);
+          dispatch(deleteOneUser(uid));
+        }
+        //
       })
 
       //? -------------------------------------------------
@@ -90,7 +95,7 @@ const DeleteProfile = () => {
 
       .then(() => {
         setTimeout(() => {
-          window.location = '/';
+          // window.location = '/';
         }, 1000);
       })
 

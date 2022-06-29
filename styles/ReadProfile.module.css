@@ -15,13 +15,19 @@
 .handleProfilButtonsModifier,
 .handleProfilButtonsSupprimer,
 .handleProfilButtonsAnnonces,
-.myForm {
+.inputInfo,
+.usersInfoBox {
   /* border: solid green 3px; */
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.box {
+  /* border: solid green 3px; */
+  padding: 0px 5px 0px 5px;
 }
 
 /** Titre de la page **/
@@ -64,23 +70,16 @@
 }
 
 .boxText {
-  border: solid green 1px;
   font-size: 1.5rem;
   line-height: 30px;
   margin: 10px 0px 10px 0px;
-  color: red;
 }
 
 /** Information sur le l'utilisateur **/
 
 .usersInfosBox {
-  border: solid green 1px;
   width: 100%;
   margin-top: 10px;
-}
-
-.myForm {
-  border: solid green 1px;
 }
 
 .usersInfo {
@@ -88,11 +87,19 @@
   width: 100%;
   display: flex;
   flex-direction: row;
-  font-size: 1.5rem;
-  padding: 5px;
+  justify-content: center;
+  font-size: 1.8rem;
+  margin: 10px 0px 15px 0px;
+}
+
+.usersInfoBox {
+  width: 60%;
+  flex-direction: row;
+  justify-content: left;
 }
 
 .info1 {
+  /* border: solid red 1px; */
   font-weight: bold;
   padding-right: 10px;
 }

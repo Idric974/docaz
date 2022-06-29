@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../../../styles/DeleteProfile.module.css';
-import { getAuth, deleteUser } from 'firebase/auth';
+import { getAuth, deleteUser, signOut } from 'firebase/auth';
 import { getStorage, ref, deleteObject } from 'firebase/storage';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteOneUser } from '../../actions/userCRUD.actions';
@@ -23,7 +23,7 @@ const DeleteProfile = () => {
   const auth = getAuth();
   const user = auth.currentUser;
   if (user) {
-    console.log('currentUser ===> ', user.uid);
+    // console.log('currentUser ===> ', user.uid);
     uid = user.uid;
   }
 
@@ -114,6 +114,23 @@ const DeleteProfile = () => {
     //? -------------------------------------------------
   };
 
+  //! Déconnexion de l'utilisateur connecté.
+
+  const userOut = async (e) => {
+    e.preventDefault();
+
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        console.log('Sign-out successful');
+        window.location = '/';
+      })
+      .catch((error) => {
+        console.log('An error happened');
+      });
+  };
+  //! -------------------------------------------------
+
   //! -------------------------------------------------
   return (
     <div className={styles.box}>
@@ -121,7 +138,7 @@ const DeleteProfile = () => {
       <div className={styles.titleBox}>
         <div className={styles.title}>Mes informations</div>
 
-        <div className={styles.inconeBox}>
+        <div onClick={userOut} className={styles.inconeBox}>
           <p className={styles.icone}>
             <FontAwesomeIcon icon={faRightFromBracket} />
           </p>

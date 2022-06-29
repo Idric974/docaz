@@ -5,6 +5,7 @@
 .inconeBox,
 .iconeText,
 .usersInfosBox,
+.myForm,
 .formBox,
 .postButton,
 .inputInstruction,
@@ -14,13 +15,20 @@
 .handleProfilButtons,
 .handleProfilButtonsModifier,
 .handleProfilButtonsSupprimer,
-.handleProfilButtonsAnnonces {
+.handleProfilButtonsAnnonces,
+.inputInfo,
+.usersInfoBox {
   /* border: solid green 3px; */
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.box {
+  /* border: solid green 3px; */
+  padding: 0px 5px 0px 5px;
 }
 
 /** Titre de la page **/
@@ -62,6 +70,12 @@
   font-size: 0.5rem;
 }
 
+.boxText {
+  font-size: 1.5rem;
+  line-height: 30px;
+  margin: 10px 0px 10px 0px;
+}
+
 /** Information sur le l'utilisateur **/
 
 .usersInfosBox {
@@ -73,14 +87,32 @@
   /* border: solid green 1px; */
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: flex-start;
   font-size: 1.5rem;
-  padding: 5px;
+  border-bottom: solid 1px black;
+  margin: 10px 0px 15px 0px;
 }
 
-.info1 {
+.usersInfoBox {
+  width: 60%;
+  flex-direction: row;
+  justify-content: left;
+}
+
+.info {
+  /* border: solid red 1px; */
   font-weight: bold;
   padding-right: 10px;
+}
+
+.inputInfo {
+  /* border: solid red 1px; */
+  width: 100%;
+  align-items: center;
+  margin: 0;
+  border: none;
+  text-align: left;
 }
 
 .usersInfoImage {

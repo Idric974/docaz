@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from 'react';
-import styles from '../../../styles/UpdateProfile.module.css';
+import styles from '../../../styles/ReadProfile.module.css';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -80,6 +80,11 @@ const ReadProfil = () => {
           <p className={styles.iconeText}>Déconnexion</p>
         </div>
       </div>
+
+      <p className={styles.boxText}>
+        Voici ci-dessous, toutes les informations vous concernant enregistrées
+        chez Docaz.re.
+      </p>
 
       {/** Information sur le l'utilisateur **/}
       <div className={styles.usersInfosBox}>

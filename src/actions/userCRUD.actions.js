@@ -64,6 +64,35 @@ export const readUser = (firebaseUi) => {
 
 //! -------------------------------------------------
 
+//! Logique pour la mise à jour d'un nouvel utilisateur.
+
+export const updateLogedUser = (data, uid) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_ANALYTICS_URL}api/user/updateOneUser/` + uid,
+        data
+      );
+
+      console.log(
+        "%c ✅ SUCCÈS : userCRUD.actions ==> UPDATE_USER ==> Mise à jour d'un utilisateur :",
+        'color: green',
+        res.data
+      );
+
+      dispatch({ type: UPDATE_USER, payload: res.data });
+    } catch (err) {
+      return console.log(
+        "%c ❌ ERREUR : userCRUD.actions ==> UPDATE_USER ==> création d'un utilisateur :",
+        'color: red',
+        err
+      );
+    }
+  };
+};
+
+//! -------------------------------------------------
+
 //! Logique pour la suppression d'un utilisateur.
 
 export const deleteOneUser = (uid) => {
@@ -74,11 +103,11 @@ export const deleteOneUser = (uid) => {
         `${process.env.NEXT_PUBLIC_ANALYTICS_URL}api/user/deleteOneUser/` + uid
       );
 
-      console.log(
-        "%c ✅ SUCCÈS : userCRUD.actions ==> DELETE_USER ==> supression d'un utilisateur :",
-        'color: green',
-        res.data
-      );
+      // console.log(
+      //   "%c ✅ SUCCÈS : userCRUD.actions ==> DELETE_USER ==> supression d'un utilisateur :",
+      //   'color: green',
+      //   res.data
+      // );
 
       dispatch({ type: DELETE_USER, payload: res.data });
 

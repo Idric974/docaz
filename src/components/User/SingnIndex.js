@@ -19,7 +19,7 @@ const SingnIndex = (props) => {
   //? I) Récupéra Le profile de l'utilisateur connecté.
 
   const userData = useSelector((state) => state.userCRUDReducer);
-  console.log('userData SingnIndex', userData);
+  // console.log('userData SingnIndex', userData);
 
   //? --------------------------------------------------
 

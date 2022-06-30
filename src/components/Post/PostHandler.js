@@ -192,41 +192,37 @@ const PostHandler = () => {
           />
         </div>
 
-        <div>
-          {articleName || brand || model || town || description ? (
-            <button className="cancel" onClick={cancelPost}>
-              {"Annuler l'annonce"}
-            </button>
-          ) : null}
-        </div>
-
         {/* Prévisualisation */}
         <div className={styles.messagePreview}>
-          {articleName || brand || model || town || description ? (
+          {articleName ? (
             <li className="card-container">
               {/** Image de l'article **/}
-              <div>{userName}</div>
+              <h1>{"Prévisualisation de l'annonce"}</h1>
+
+              <div className={styles.userInfo}>{userName}</div>
 
               {/** Téléphone **/}
-              <div>{phone}</div>
+              <div className={styles.userInfo}>{phone}</div>
 
               {/** Nom de l'article **/}
-              <div>{articleName}</div>
+              <div className={styles.userInfo}>{articleName}</div>
 
               {/** Marque de l'article **/}
-              <div>{brand}</div>
+              <div className={styles.userInfo}>{brand}</div>
 
               {/** Modèle de l'article **/}
-              <div>{model}</div>
+              <div className={styles.userInfo}>{model}</div>
 
               {/** Ville de l'article **/}
-              <div>{town}</div>
+              <div className={styles.userInfo}>{town}</div>
 
               {/** Description de l'article **/}
-              <div>{description}</div>
+              <div className={styles.userInfo}>{description}</div>
 
               {/** Date du post **/}
-              <div>{timestampParser(Date.now())}</div>
+              <div className={styles.userInfo}>
+                {timestampParser(Date.now())}
+              </div>
 
               {/** Image de l'article **/}
               <div className={styles.prewieuImageBox}>
@@ -241,6 +237,14 @@ const PostHandler = () => {
             </li>
           ) : null}
         </div>
+        <div>
+          {articleName || brand || model || town || description ? (
+            <button className={styles.postButton} onClick={cancelPost}>
+              {"Annuler l'annonce"}
+            </button>
+          ) : null}
+        </div>
+
         <button className={styles.postButton} onClick={handlePost}>
           {"Poster l'annonce"}
         </button>

@@ -16,10 +16,6 @@
   justify-content: center;
 }
 
-.inputTitle {
-  /* border: solid green 3px; */
-}
-
 .inputMessage {
   /* border: solid green 3px; */
   width: 100%;
@@ -46,7 +42,7 @@
 }
 
 .messagePreview {
-  border: solid red 1px;
+  /* border: solid red 1px; */
   width: 100%;
   margin: 10px 0px 10px 0px;
 }
@@ -57,4 +53,17 @@
 
 .prewieuImage {
   width: 100%;
+}
+
+.userInfo {
+  /* border: solid red 1px; */
+  width: 98%;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  justify-content: center;
+  margin: 10px 0px 5px 0px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  font-size: 1.5rem;
 }

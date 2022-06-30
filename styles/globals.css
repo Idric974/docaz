@@ -1,5 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
 
+:root {
+  --couleur1: green;
+  --shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  --bgColor: #373964;
+  --Primary: #361fdb;
+  --Secondary: #f44611;
+  --grisClaire: #f5e9e2;
+  --Noire: #040f16;
+  --police: @import
+    url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+  --fonte: 'Russo One', sans-serif;
+}
+
 h1,
 h2,
 h3,
@@ -195,10 +210,12 @@ Link {
   cursor: pointer;
 }
 
+/**➖➖➖➖➖ Input ➖➖➖➖➖**/
+
 button {
   width: 90%;
   height: 50px;
-  border-radius: 10px;
+  border-radius: 5px;
   cursor: pointer;
   text-align: center;
   font-size: 1.5rem;
@@ -208,18 +225,40 @@ button {
     rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
 }
 
-/* input {
-  width: 50%;
-} */
+button:hover {
+  box-shadow: 0px 0px 5px 1px var(--Primary);
+  border-radius: 5px;
+  border: hidden;
+  border: 0;
+  font-weight: bold;
+  color: var(--Primary);
+}
+
+/**➖➖➖➖➖➖➖➖➖➖➖➖**/
+
+/**➖➖➖➖➖ Input ➖➖➖➖➖**/
+
+input {
+  width: 98%;
+  height: 50px;
+  border: none;
+  border-bottom: solid black 1px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 1.5rem;
+  padding-left: 10px;
+  margin: 20px 0px 10px 0px;
+}
 
 input:focus {
-  background-color: var(--grisClaire);
-  border: hidden;
+  /* background-color: var(--grisClaire); */
+  outline: none;
   border: 0;
 }
 
 input:hover {
   box-shadow: 0px 0px 5px 1px var(--Primary);
+  border-radius: 5px;
   border: hidden;
   border: 0;
 }
@@ -244,6 +283,10 @@ input::placeholder {
   font-size: 1.5rem;
 }
 
+/**➖➖➖➖➖➖➖➖➖➖➖➖**/
+
+/**➖➖➖➖➖ Label ➖➖➖➖➖**/
+
 label::after {
   margin: 50px 50px 0px 0px;
 }
@@ -254,44 +297,51 @@ label {
   margin-top: 10px;
 }
 
-:root {
-  --couleur1: green;
-  --shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
-    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
-  --bgColor: #373964;
-  --Primary: #361fdb;
-  --Secondary: #f44611;
-  --grisClaire: #f5e9e2;
-  --Noire: #040f16;
-  --police: @import
-    url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
-  --fonte: 'Russo One', sans-serif;
-}
+/**➖➖➖➖➖➖➖➖➖➖➖➖**/
+
+/**➖➖➖➖➖ Textarea ➖➖➖➖➖**/
 
 textarea {
   width: 100%;
   height: auto;
   border: none;
-  background-color: #ccc;
   font-size: 1.2rem;
   padding: 10px 10px 25px 10px;
   font-family: 'Montserrat', sans-serif;
+  border: solid black 1px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 textarea:focus {
-  background-color: var(--Primary);
+  outline: none;
+  border: 0;
 }
 
-input {
-  width: 98%;
-  height: 50px;
-  border-radius: 10px;
-  cursor: pointer;
-  text-align: center;
-  font-size: 1.5rem;
-  margin: 20px 0px 10px 0px;
-  /* box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px,
-    rgba(6, 24, 44, 0.65) 0px 4px 6px -1px,
-    rgba(255, 255, 255, 0.08) 0px 1px 0px inset; */
+textarea:hover {
+  box-shadow: 0px 0px 5px 1px var(--Primary);
+  border: hidden;
+  border: 0;
 }
+
+textarea::-webkit-input-placeholder {
+  font-size: 2rem;
+}
+
+textarea::-moz-placeholder {
+  font-size: 2rem;
+}
+
+textarea:-ms-input-placeholder {
+  font-size: 2rem;
+}
+
+textarea::-ms-input-placeholder {
+  font-size: 2rem;
+}
+
+textarea::placeholder {
+  font-size: 1.5rem;
+}
+
+/**➖➖➖➖➖➖➖➖➖➖➖➖**/

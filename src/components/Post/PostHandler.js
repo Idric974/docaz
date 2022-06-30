@@ -107,7 +107,7 @@ const PostHandler = () => {
       .then(() => {
         setTimeout(() => {
           dispatch(addPost(data));
-          // window.location = '/';
+           window.location = '/';
         }, 1500);
       });
   };

@@ -198,10 +198,6 @@ const PostHandler = () => {
               {"Annuler l'annonce"}
             </button>
           ) : null}
-
-          <button className={styles.postButton} onClick={handlePost}>
-            {"Poster l'annonce"}
-          </button>
         </div>
 
         {/* Prévisualisation */}
@@ -245,6 +241,9 @@ const PostHandler = () => {
             </li>
           ) : null}
         </div>
+        <button className={styles.postButton} onClick={handlePost}>
+          {"Poster l'annonce"}
+        </button>
       </div>
     </div>
   );

@@ -5,12 +5,32 @@ import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import { getAuth, signOut } from 'firebase/auth';
+import { getAuth, signOut, sendPasswordResetEmail } from 'firebase/auth';
 
 library.add(faRightFromBracket);
 
 const ReadProfil = () => {
   //
+
+  //! Les variables.
+
+  let uid;
+
+  //! -------------------------------------------------
+
+  //! Recupération de l'utilisateur Uid.
+
+  const auth = getAuth();
+
+  const user = auth.currentUser;
+  if (user !== null) {
+    uid = user.uid;
+    console.log('uid du currentUser ===> ', user.uid);
+    console.log('email du currentUser ===> ', user.email);
+  }
+
+  //! -------------------------------------------------
+
   //! I) Affichage des informations concernant l'utilisateur connecté.
 
   //? I) Récupéra Le profile de l'utilisateur connecté.
@@ -54,7 +74,6 @@ const ReadProfil = () => {
   const userOut = async (e) => {
     e.preventDefault();
 
-    const auth = getAuth();
     signOut(auth)
       .then(() => {
         console.log('Sign-out successful');
@@ -64,6 +83,41 @@ const ReadProfil = () => {
         console.log('An error happened');
       });
   };
+  //! -------------------------------------------------
+
+  //! Envoyer un e-mail de réinitialisation du mot de passe.
+
+  const userResetEmail = async (e) => {
+    e.preventDefault();
+
+    sendPasswordResetEmail(auth, user.email)
+      .then(() => {
+        console.log(
+          '✅ %c SUCCÈS ReadProfil ==> e-mail de réinitialisation du mot de passe envoyé à : ',
+          user.email,
+          'color: green'
+        );
+      })
+      .catch((error) => {
+        //
+        const errorCode = error.code;
+
+        console.log(
+          '❌ %c ERREUR CODE ReadProfil ==> Envoi e-mail de réinitialisation du mot de passe échouée :',
+          'color: orange',
+          errorCode
+        );
+
+        const errorMessage = error.message;
+
+        console.log(
+          '❌ %c ERREUR MESSAGE ReadProfil ==> Envoi e-mail de réinitialisation du mot de passe échouée :',
+          'color: orange',
+          errorMessage
+        );
+      });
+  };
+
   //! -------------------------------------------------
 
   return (
@@ -122,25 +176,11 @@ const ReadProfil = () => {
         </div>
       </div>
 
-      {/** Bouton gestion profl **/}
-
-      {/* <div className={styles.handleProfilButtonsBox}>
-        <Link href="/UpdateProfile">
-          <a className={styles.handleProfilButtonsModifier}>Modifier profile</a>
-        </Link>
-
-        <Link href="/DeleteProfile">
-          <a className={styles.handleProfilButtonsSupprimer}>
-            Supprimer profile
-          </a>
-        </Link>
-
-        <Link href="/mesPosts">
-          <a className={styles.handleProfilButtonsAnnonces}>
-            Gérer mes annonces
-          </a>
-        </Link>
-      </div> */}
+      <div className={styles.deleteButtonBox}>
+        <button className={styles.deleteButton} onClick={userResetEmail}>
+          {'Réinitialiser mon mot de passe'}
+        </button>
+      </div>
     </div>
   );
 };

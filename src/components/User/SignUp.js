@@ -12,6 +12,9 @@ const SignUp = () => {
 
   //! Les constantes.
 
+  const dispatch = useDispatch();
+  const auth = getAuth();
+
   //? Create user.
 
   const registerFirstName = useRef();
@@ -31,8 +34,6 @@ const SignUp = () => {
 
   const [imageUpload, setimageUpload] = useState(null);
   const [postPicture, setPostPicture] = useState(null);
-
-  const dispatch = useDispatch();
 
   //! -------------------------------------------------
 
@@ -77,89 +78,147 @@ const SignUp = () => {
 
     //? -------------------------------------------------
 
-    //? Enregistremant de l'image.
+    //? Procédure de création d'un utilisateur.
 
-    if (imageUpload == null) return;
+    let usersCreator = new Promise(function (resolve, reject) {
+      if (registerFirstName) {
+        resolve();
+      } else {
+        reject();
+      }
+    });
 
-    const imageRef = ref(storage, `images/${imageUpload.name + date}`);
+    let action = async () => {
+      let go = await usersCreator;
+      return go;
+    };
 
-    uploadBytes(imageRef, imageUpload)
-      .then((snapshot) => {
-        getDownloadURL(snapshot.ref).then((url) => {
+    action()
+      //
+      //* Création de l’image l’utilisateur actuelle.
+
+      .then(() => {
+        //
+
+        let imageRef;
+
+        if (imageUpload == null) {
+          imageRef = ref(storage, `images/${'avatar' + date}`);
+        } else {
+          imageRef = ref(storage, `images/${imageUpload.name + date}`);
+        }
+
+        uploadBytes(imageRef, imageUpload).then((snapshot) => {
           //
-          userImageFileName = snapshot.ref._location.path_;
-          // console.log('userImageFileName ===> ', userImageFileName);
+          getDownloadURL(snapshot.ref)
+            .then((url) => {
+              //
+              userImageFileName = snapshot.ref._location.path_;
 
-          //console.log('imageUrl ===> ', url);
-          photoURL = url;
+              photoURL = url;
+
+              console.log(
+                '✅ %c SUCCÈS SignUp ==> Création de l’image l’utilisateur actuelle réussie :',
+                'color: green',
+                url
+              );
+            })
+
+            .then(() => {
+              //
+              //* Création de l'utilisateur pour son authentification.
+
+              createUserWithEmailAndPassword(
+                auth,
+                registerEmail.current.value,
+                registerPassword.current.value
+              )
+                .then(async (userAuth) => {
+                  console.log(
+                    '%c ✅ SUCCÈS : SignUp ==> Utilisteur créé : ',
+                    'color: green'
+                  );
+                  uid = userAuth.user.auth.currentUser.auth.currentUser.uid;
+                  console.log(
+                    '%c ✅ SUCCÈS : SignUp ==> uid généré : ',
+                    'color:green',
+                    uid
+                  );
+                })
+
+                //* -------------------------------------------------
+
+                //* Transmission des données user au back.
+
+                .then(() => {
+                  //
+
+                  let urlAvatar;
+
+                  if (imageUpload == null) {
+                    urlAvatar =
+                      'https://firebasestorage.googleapis.com/v0/b/docaz-cb118.appspot.com/o/images%2FAvatar%2FpersonaDocaz.jpg?alt=media&token=dedeb9f7-c9b4-41e6-bc7e-2dc45d233230';
+                  } else {
+                    urlAvatar = photoURL;
+                  }
+
+                  data = {
+                    userId: uid,
+                    userImageFileName: userImageFileName,
+                    firstName: registerFirstName.current.value,
+                    lastName: registerLastName.current.value,
+                    userName: registerUserName.current.value,
+                    phone: registerPhone.current.value,
+                    town: registerTown.current.value,
+
+                    photoURL: urlAvatar,
+                  };
+
+                  console.log(
+                    '%c ✅ SUCCÈS : SignUp ==> Données transmises : ',
+                    'color:green',
+                    data
+                  );
+
+                  dispatch(createUser(data));
+
+                  window.location = '/';
+                })
+
+                //* Catch des erreurs lors de la création de l'utilisateur pour son authentification.
+
+                .catch((error) => {
+                  //
+                  const errorCode = error.code;
+
+                  console.log(
+                    "❌ %c ERREUR CODE SignUp ==> Création de l'utilisateur pour son authentification échouée :",
+                    'color: orange',
+                    errorCode
+                  );
+
+                  const errorMessage = error.message;
+
+                  console.log(
+                    "❌ %c ERREUR MESSAGE SignUp ==> Création de l'utilisateur pour son authentification échouée :",
+                    'color: orange',
+                    errorMessage
+                  );
+                });
+
+              //* -------------------------------------------------
+            });
         });
       })
 
-      //? -------------------------------------------------
+      //* Catch des erreurs.
 
-      //? Auth utilisateur.
-      .then(() => {
-        setTimeout(() => {
-          const auth = getAuth();
-          createUserWithEmailAndPassword(
-            auth,
-            registerEmail.current.value,
-            registerPassword.current.value
-          )
-            //? -------------------------------------------------
-
-            //? Enregistremant des informations utilisateur.
-
-            .then(async (userAuth) => {
-              console.log(
-                '%c ✅ SUCCÈS : Utilisteur créé ==> SignUp.js ==> ',
-                'color: green',
-                userAuth
-              );
-
-              uid = userAuth.user.auth.currentUser.auth.currentUser.uid;
-              console.log(
-                "%c 🔺 INFO : uid de l'utilisateur connecté ",
-                'color:blue',
-                uid
-              );
-            })
-
-            //? -------------------------------------------------
-
-            .then(() => {
-              data = {
-                userId: uid,
-                userImageFileName: userImageFileName,
-                firstName: registerFirstName.current.value,
-                lastName: registerLastName.current.value,
-                userName: registerUserName.current.value,
-                phone: registerPhone.current.value,
-                town: registerTown.current.value,
-                photoURL: photoURL,
-              };
-
-              // console.log('data ===>', data);
-
-              dispatch(createUser(data));
-
-              window.location = '/';
-            })
-
-            //? Cath des erreurs
-
-            .catch((error) => {
-              const errorCode = error.code;
-              console.log('errorCode', errorCode);
-
-              const errorMessage = error.message;
-              console.log('errorMessage', errorMessage);
-            });
-
-          //? -------------------------------------------------
-        }, 1500);
-
-        // console.log('data : ', data);
+      .catch((error) => {
+        console.log(
+          "❌ %c ERROR SignUp ==> Capture générale de l'erreur :",
+          'color: orange',
+          error
+        );
       });
   }
 
@@ -229,6 +288,13 @@ const SignUp = () => {
           </div>
         </div>
 
+        {/** Image de l'article **/}
+        <div className={styles.prewieuImageBox}>
+          <div>
+            <img className={styles.prewieuImage} src={postPicture} alt="" />
+          </div>
+        </div>
+
         <div className={styles.formInputButtonBox}>
           <input
             className={styles.formInputButton}
@@ -237,13 +303,6 @@ const SignUp = () => {
           />
         </div>
       </form>
-
-      {/** Image de l'article **/}
-      <div className={styles.prewieuImageBox}>
-        <div>
-          <img className={styles.prewieuImage} src={postPicture} alt="" />
-        </div>
-      </div>
     </div>
   );
 };

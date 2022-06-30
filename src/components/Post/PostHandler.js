@@ -107,7 +107,7 @@ const PostHandler = () => {
       .then(() => {
         setTimeout(() => {
           dispatch(addPost(data));
-           window.location = '/';
+          window.location = '/';
         }, 1500);
       });
   };
@@ -203,44 +203,48 @@ const PostHandler = () => {
             {"Poster l'annonce"}
           </button>
         </div>
-      </div>
 
-      {/* Prévisualisation */}
-      <div className={styles.messagePreview}>
-        {articleName || brand || model || town || description ? (
-          <li className="card-container">
-            {/** Image de l'article **/}
-            <div>{userName}</div>
+        {/* Prévisualisation */}
+        <div className={styles.messagePreview}>
+          {articleName || brand || model || town || description ? (
+            <li className="card-container">
+              {/** Image de l'article **/}
+              <div>{userName}</div>
 
-            {/** Téléphone **/}
-            <div>{phone}</div>
+              {/** Téléphone **/}
+              <div>{phone}</div>
 
-            {/** Nom de l'article **/}
-            <div>{articleName}</div>
+              {/** Nom de l'article **/}
+              <div>{articleName}</div>
 
-            {/** Marque de l'article **/}
-            <div>{brand}</div>
+              {/** Marque de l'article **/}
+              <div>{brand}</div>
 
-            {/** Modèle de l'article **/}
-            <div>{model}</div>
+              {/** Modèle de l'article **/}
+              <div>{model}</div>
 
-            {/** Ville de l'article **/}
-            <div>{town}</div>
+              {/** Ville de l'article **/}
+              <div>{town}</div>
 
-            {/** Description de l'article **/}
-            <div>{description}</div>
+              {/** Description de l'article **/}
+              <div>{description}</div>
 
-            {/** Date du post **/}
-            <div>{timestampParser(Date.now())}</div>
+              {/** Date du post **/}
+              <div>{timestampParser(Date.now())}</div>
 
-            {/** Image de l'article **/}
-            <div className={styles.prewieuImageBox}>
-              <div>
-                <img className={styles.prewieuImage} src={postPicture} alt="" />
+              {/** Image de l'article **/}
+              <div className={styles.prewieuImageBox}>
+                <div>
+                  <img
+                    className={styles.prewieuImage}
+                    src={postPicture}
+                    alt=""
+                  />
+                </div>
               </div>
-            </div>
-          </li>
-        ) : null}
+            </li>
+          ) : null}
+        </div>
       </div>
     </div>
   );

@@ -1,0 +1,60 @@
+.box,
+.boxHeadContent,
+.boxHeadContentIcone,
+.boxHeadContentText,
+.boxHeadImage,
+.usersInfoImage,
+.boxHeadUserName,
+.boxBody {
+  /* border: solid green 1px; */
+  /* height: 100vh; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* .box {
+  border: solid green 1px;
+} */
+
+.boxHeadContent {
+  /* border: solid green 1px; */
+  flex-direction: row;
+  width: 100%;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
+  background-color: white;
+  box-shadow: 0px 0px 5px 1px var(--Primary);
+  padding: 5px 10px 5px 10px;
+}
+
+.headContentIcone {
+  /* border: solid blue 1px; */
+  width: 20%;
+  font-size: 1.5rem;
+}
+
+.boxHeadContentText {
+  /* border: solid blue 1px; */
+  width: 100%;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.boxHeadImage {
+  /* border: solid blue 1px; */
+  width: 18%;
+}
+
+.usersInfoImage {
+  border-radius: 50%;
+  border: solid black 1px;
+}
+
+.boxBody {
+  /* border: solid red 1px; */
+  margin-top: 5px;
+  height: 300px;
+}

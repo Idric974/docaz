@@ -3,7 +3,7 @@ import styles from '../../../styles/PostHandler.module.css';
 import React, { useRef, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { timestampParser } from '../../utils/Utils';
-import { addPost } from '../../../src/actions/post.action';
+import { addPost } from '../../actions/postCRUD.action';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../firebase';
 import { auth } from '../../firebase.config';
@@ -23,7 +23,7 @@ const PostHandler = () => {
   //? I) Récupér le profile de l'utilisateur connecté.
 
   const userData = useSelector((state) => state.userCRUDReducer);
-  console.log('userData', userData);
+  // console.log('userData', userData);
 
   //? -------------------------------------------------
 

@@ -16,7 +16,7 @@ config.autoAddCss = false;
 //! Fonction à jouer au démarrage.
 
 import { readUser } from '../src/actions/userCRUD.actions';
-import { readAllPost } from '../src/actions/post.action';
+import { readAllPost } from '../src/actions/postCRUD.action';
 //! --------------------------------------------------
 
 //! Outils de développement.
@@ -38,11 +38,11 @@ function MyApp({ Component, pageProps }) {
       if (user) {
         setFirebaseUi(user.uid);
 
-        console.log(
-          '%c ✅ SUCCÈS ==> _app.js ==> ID de l"utilisateur connecté : ',
-          'color: green',
-          firebaseUi
-        );
+        // console.log(
+        //   '%c ✅ SUCCÈS ==> _app.js ==> ID de l"utilisateur connecté : ',
+        //   'color: green',
+        //   firebaseUi
+        // );
       } else {
         console.log(
           '%c ❌  ERREUR ==> _app ==> No user connected',

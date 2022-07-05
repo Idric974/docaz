@@ -393,7 +393,11 @@ const UpdateProfile = () => {
           {/** Image de l'article **/}
           <div className={styles.prewieuImageBox}>
             <div>
-              <img className={styles.prewieuImage} src={postPicture} alt="" />
+              <img
+                className={styles.prewieuImage}
+                src={postPicture}
+                alt="card-pic"
+              />
             </div>
           </div>
 

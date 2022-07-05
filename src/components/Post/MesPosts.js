@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from 'react';
-import styles from '../styles/MesPosts.module.css';
+import styles from '../../../styles/MesPosts.module.css';
 import { getAuth } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
-import { readUsersPost } from '../src/actions/postCRUD.action';
-import Card from '../src/components/Post/Card';
-import { isEmpty } from '../src/utils/Utils';
+import { readUsersPost } from '../../../src/actions/postCRUD.action';
+import MesPostsCard from '../../components/Post/MesPostsCard';
+import { isEmpty } from '../../../src/utils/Utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
@@ -92,7 +92,7 @@ const MesPosts = () => {
         <ul className={styles.postBoxDiv}>
           {!isEmpty(posts[0]) &&
             posts.map((post) => {
-              return <Card post={post} key={post.postDate} />;
+              return <MesPostsCard post={post} key={post.postDate} />;
             })}
         </ul>
       </div>

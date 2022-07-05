@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import ReadProfil from './ReadProfil';
 import DeleteProfile from './DeleteProfile';
 import UpdateProfile from './UpdateProfile';
+import MesPosts from '../Post/MesPosts';
 
 const ReadProfileIndex = (props) => {
   //
@@ -14,6 +15,8 @@ const ReadProfileIndex = (props) => {
   const [updateProfileModal, setUpdateProfileModal] = useState(
     props.updateProfil
   );
+
+  const [mesPostsModal, setMesPostsModal] = useState(props.updateProfil);
 
   //? I) Récupéra Le profile de l'utilisateur connecté.
 
@@ -33,14 +36,22 @@ const ReadProfileIndex = (props) => {
       setReadProfilModal(true);
       setDeleteProfileModal(false);
       setUpdateProfileModal(false);
+      setMesPostsModal(false);
     } else if (e.target.id === 'Modifier') {
       setReadProfilModal(false);
       setUpdateProfileModal(true);
       setDeleteProfileModal(false);
+      setMesPostsModal(false);
     } else if (e.target.id === 'Supprimer') {
       setReadProfilModal(false);
       setUpdateProfileModal(false);
       setDeleteProfileModal(true);
+      setMesPostsModal(false);
+    } else if (e.target.id === 'mesPosts') {
+      setReadProfilModal(false);
+      setUpdateProfileModal(false);
+      setDeleteProfileModal(false);
+      setMesPostsModal(true);
     }
   };
 
@@ -73,10 +84,19 @@ const ReadProfileIndex = (props) => {
           >
             {'Supprimer'}
           </div>
+
+          <div
+            className={mesPostsModal ? styles.tab : null}
+            onClick={handleModals}
+            id="mesPosts"
+          >
+            {'Mes Posts'}
+          </div>
         </div>
         {readProfilModal && <ReadProfil />}
         {deleteProfileModal && <DeleteProfile />}
         {updateProfileModal && <UpdateProfile />}
+        {mesPostsModal && <MesPosts />}
       </div>
     </div>
   );

@@ -6,37 +6,24 @@ import { dateParser, isEmpty } from '../../utils/Utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-  faCode,
-  faHighlighter,
   faThumbsUp,
-  faThumbsDown,
-  faHouse,
-  faRightToBracket,
-  faRightFromBracket,
-  faUser,
   faSpinner,
   faPhone,
   faHeart,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
-  faCode,
-  faHighlighter,
   faThumbsUp,
-  faThumbsDown,
-  faHouse,
-  faRightToBracket,
-  faRightFromBracket,
-  faUser,
+
   faSpinner,
   faPhone,
   faHeart
 );
 
 const Card = ({ post }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  console.log(' Post Data : ', post);
 
-  // console.log('Liste des posts : ', post);
+  const [isLoading, setIsLoading] = useState(false);
 
   //! Le profil de l'auteur du post.
 
@@ -102,38 +89,38 @@ const Card = ({ post }) => {
             <div className={styles.postBody}>
               {''}
               {/** Nom de l'article **/}
-              <div className={styles.postName}>{post.name}</div>
+              <div className={styles.postItems}>
+                <div className={styles.postItemsTitle}>{'Nom'}</div>
+                <div className={styles.postItemsData}>{post.articleName}</div>
+              </div>
 
               {/** Marque de l'article **/}
-              <div className={styles.postBrand}>
-                {'Marque : '}
-                {post.brand}
+              <div className={styles.postItems}>
+                <div className={styles.postItemsTitle}> {'Marque'}</div>
+                <div className={styles.postItemsData}> {post.brand}</div>
               </div>
 
               {/** Modèle de l'article **/}
-              <div className={styles.postModel}>
-                {'Modèle : '}
-                {post.model}
+
+              <div className={styles.postItems}>
+                <div className={styles.postItemsTitle}> {'Modèle'}</div>
+                <div className={styles.postItemsData}> {post.model}</div>
+              </div>
+
+              {/** Prix de l'article **/}
+
+              <div className={styles.postItems}>
+                <div className={styles.postItemsTitle}> {'Prix'}</div>
+                <div className={styles.postItemsData}> {post.prix}</div>
               </div>
 
               {/** Description de l'article **/}
-              <div className={styles.postDescription}>
-                {'Description : '}
-                {post.description}
+              <div className={styles.postItems}>
+                <div className={styles.postItemsTitle}> {'Description'}</div>
+                <div className={styles.postItemsData}>{post.description}</div>
               </div>
 
-              {/** Image de l'article **/}
-              {/* <div className={styles.postPictureBox}>
-                {post.picture && (
-                  <img
-                    className={styles.postPicture}
-                    src={post.picture}
-                    alt="card-pic"
-                  />
-                )}
-              </div> */}
-
-              <div className={styles.postPictureBox}>
+              <div className={styles.postItems}>
                 <img
                   className={styles.postPicture}
                   src={post.imageUrl}

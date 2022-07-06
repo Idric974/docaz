@@ -26,7 +26,7 @@ const MesPosts = () => {
   const auth = getAuth();
   const user = auth.currentUser;
   if (user) {
-    console.log('currentUser ===> ', user.uid);
+    // console.log('MesPosts ==> currentUser : ', user.uid);
     uid = user.uid;
   }
 
@@ -58,7 +58,7 @@ const MesPosts = () => {
   const dispatch = useDispatch();
 
   const posts = useSelector((state) => state.postCRUDReducer);
-  console.log('MesPosts ==> Liste des posts ===> ', posts);
+  //console.log('MesPosts ==> Liste des posts ===> ', posts);
 
   useEffect(() => {
     dispatch(readUsersPost(uid));

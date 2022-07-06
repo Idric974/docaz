@@ -12,11 +12,11 @@ export const addPost = (data) => {
         data
       );
 
-      console.log(
-        "%c ✅ SUCCÈS : post.action ==> ADD_POST ==> création d'un post :",
-        'color: green',
-        res.data
-      );
+      // console.log(
+      //   "%c ✅ SUCCÈS : post.action ==> ADD_POST ==> création d'un post ==> post Id :",
+      //   'color: green',
+      //   res.data._path.segments[1]
+      // );
 
       dispatch({ type: ADD_POST, payload: data });
     } catch (err) {

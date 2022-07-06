@@ -11,7 +11,7 @@ const Thread = () => {
   const [loadPost, setLoadPost] = useState(true);
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.postCRUDReducer);
-  // console.log('⭐ CompThread ===>  Les posts :', posts);
+  //console.log('⭐ CompThread ===>  Les posts :', posts);
 
   useEffect(() => {
     if (loadPost) {

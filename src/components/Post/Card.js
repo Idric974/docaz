@@ -21,7 +21,7 @@ library.add(
 );
 
 const Card = ({ post }) => {
-  console.log(' Post Data : ', post);
+  // console.log(' ⭐ POST DATA ⭐ ', post);
 
   const [isLoading, setIsLoading] = useState(false);
 

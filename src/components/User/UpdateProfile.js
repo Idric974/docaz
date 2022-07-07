@@ -187,6 +187,7 @@ const UpdateProfile = () => {
                 photoURL = url;
               })
               //* -------------------------------------------------
+
               //* Mise à jour de la data de l’utilisateur.
               .then(() => {
                 data = {

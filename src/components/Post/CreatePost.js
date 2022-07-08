@@ -8,7 +8,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../firebase';
 import { auth } from '../../firebase.config';
 
-const PostHandler = () => {
+const CreatePost = () => {
   //
   //! I) Affichage des informations concernant l'utilisateur connecté.
 
@@ -253,4 +253,4 @@ const PostHandler = () => {
   );
 };
 
-export default PostHandler;
+export default CreatePost;

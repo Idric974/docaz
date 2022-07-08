@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from '../styles/index.module.css';
 import Logo from '../src/components/Logo/Logo';
 import Thread from '../src/components/Thread/Thread';
-import PostHandler from '../src/components/Post/PostHandler';
+import CreatePost from '../src/components/Post/CreatePost';
 import Favorites from '../src/components/Favorites/Favorites';
 import SingnIndex from '../src/components/User/SingnIndex';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -36,7 +36,7 @@ library.add(
 export default function Home(props) {
   //
   const [threadModal, setThreadModal] = useState(props.Thread);
-  const [postHandlerModal, setPostHandlerModal] = useState(props.signup);
+  const [createPostModal, setCreatePostModal] = useState(props.signup);
   const [favoritesModal, setfavoritesModal] = useState(props.signup);
   const [accountModal, setAccountModal] = useState(props.signup);
 
@@ -50,22 +50,22 @@ export default function Home(props) {
 
     if (e.target.id === 'AccueilId') {
       setThreadModal(true);
-      setPostHandlerModal(false);
+      setCreatePostModal(false);
       setfavoritesModal(false);
       setAccountModal(false);
     } else if (e.target.id === 'postId') {
       setThreadModal(false);
-      setPostHandlerModal(true);
+      setCreatePostModal(true);
       setfavoritesModal(false);
       setAccountModal(false);
     } else if (e.target.id === 'favoriteseId') {
       setThreadModal(false);
-      setPostHandlerModal(false);
+      setCreatePostModal(false);
       setfavoritesModal(true);
       setAccountModal(false);
     } else if (e.target.id === 'accountId') {
       setThreadModal(false);
-      setPostHandlerModal(false);
+      setCreatePostModal(false);
       setfavoritesModal(false);
       setAccountModal(true);
     }
@@ -88,7 +88,7 @@ export default function Home(props) {
         </div>
 
         <div
-          className={postHandlerModal ? styles.tab : styles.tabOff}
+          className={createPostModal ? styles.tab : styles.tabOff}
           onClick={handleModals}
           id="postId"
         >
@@ -119,7 +119,7 @@ export default function Home(props) {
       </div>
       <div className={styles.appBody}>
         {threadModal && <Thread />}
-        {postHandlerModal && <PostHandler />}
+        {createPostModal && <CreatePost />}
         {favoritesModal && <Favorites />}
         {accountModal && <SingnIndex />}
       </div>

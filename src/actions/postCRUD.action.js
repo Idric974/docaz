@@ -97,11 +97,11 @@ export const updateCurentPost = (data) => {
         data
       );
 
-      console.log(
-        "%c ✅ SUCCÈS : postCRUD.actions ==> UPDATE_POST ==> Mise à jour d'un post :",
-        'color: green',
-        res.data
-      );
+      // console.log(
+      //   "%c✅ SUCCÈS : postCRUD.actions ==> UPDATE_POST ==> Mise à jour d'un post :",
+      //   'color: green',
+      //   res.data
+      // );
 
       dispatch({ type: UPDATE_POST, payload: res.data });
     } catch (err) {
@@ -128,7 +128,7 @@ export const deleteOnePost = (dataId) => {
       );
 
       console.log(
-        "%c ✅ SUCCÈS : postCRUD.actions ==> DELETE_POST ==> supression d'un utilisateur :",
+        "%c ✅ SUCCÈS : postCRUD.actions ==> DELETE_POST ==> supression d'un post :",
         'color: green',
         res.data
       );
@@ -136,7 +136,7 @@ export const deleteOnePost = (dataId) => {
       dispatch({ type: DELETE_POST, payload: res.data });
     } catch (err) {
       return console.log(
-        "%c ❌ ERREUR : postCRUD.actions ==> DELETE_POST ==> supression d'un utilisateur :",
+        "%c ❌ ERREUR : postCRUD.actions ==> DELETE_POST ==> supression d'un post :",
         'color: red',
         err
       );

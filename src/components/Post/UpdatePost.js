@@ -28,6 +28,7 @@ const Card = ({ post }) => {
   let dataId;
   let userImageFileName;
   let MajPhotoURL;
+  let imageUrl;
   let date = new Date().getTime();
 
   //! -------------------------------------------------
@@ -58,7 +59,7 @@ const Card = ({ post }) => {
 
   //! -------------------------------------------------
 
-  //! Logique pour la mise à jour du post.
+  //! LOGIQUE POUR LA MISE À JOUR D'UN POST..
 
   //? Récupération des informations saisies pour la mise à jour.
 
@@ -71,102 +72,33 @@ const Card = ({ post }) => {
 
   //? -------------------------------------------------
 
-  //? Transmission des inforamtions.
+  //? les fonctions.
 
-  async function handlePostButton(e) {
-    //
-    e.preventDefault();
+  //* Création de l'image.
 
-    console.log('registerArticleName :', registerArticleName.current.value);
-    console.log('registerBrand :', registerBrand.current.value);
-    console.log('registerDescription :', registerDescription.current.value);
-    console.log('registerModel :', registerModel.current.value);
-    console.log('registerPrix :', registerPrix.current.value);
-    console.log('registerTown :', registerTown.current.value);
+  function imageCreator() {
+    return new Promise((resolve, reject) => {
+      if (imageUpload == null) {
+        imageUrl = post.imageUrl;
 
-    let postUpdater = new Promise(function (resolve, reject) {
-      if (post) {
+        // console.log('imageUrl : ', imageUrl);
         resolve();
       } else {
-        reject();
-      }
-    });
-
-    let action = async () => {
-      let go = await postUpdater;
-      return go;
-    };
-
-    //* Création d'une nouvelle image pour le post.
-
-    action()
-      .then(() => {
-        if (imageUpload == null) return;
-
         const imageRef = ref(storage, `images/${imageUpload.name + date}`);
 
         uploadBytes(imageRef, imageUpload)
-          //
-          //* Création de la nouvelle image.
-
           .then((snapshot) => {
-            getDownloadURL(snapshot.ref)
-              .then((url) => {
-                //
-                userImageFileName = snapshot.ref._location.path_;
-                console.log(
-                  '✅ %c SUCCÈS UpdateProfile ==> Création de la nouvelle image de l’utilisateur réussie :',
-                  'color: green',
-                  url
-                );
-                MajPhotoURL = url;
-              })
-
-              //* Mise à jour de la data post.
+            getDownloadURL(snapshot.ref).then((url) => {
               //
-              .then(() => {
-                data = {
-                  id: post.postId,
-                  articleName: registerArticleName.current.value,
-                  town: registerTown.current.value,
-                  brand: registerBrand.current.value,
-                  model: registerModel.current.value,
-                  description: registerDescription.current.value,
-                  imageUrl: MajPhotoURL,
-                };
-
-                console.log(
-                  '✅ %c SUCCÈS UpdateProfile ==> Mise à jour de la data de l’utilisateur :',
-                  'color: green',
-                  data
-                );
-
-                dispatch(updateCurentPost(data));
-              })
-
-              //* Suppression de l'ancienne image du post.
-              //
-              .then(() => {
-                const desertRef = ref(storage, post.imageUrl);
-                deleteObject(desertRef)
-                  .then(() => {
-                    console.log(
-                      '✅ %c SUCCÈS Update post ==> Suppression de l’image actuelle du post réussie :',
-                      'color: green',
-                      desertRef
-                    );
-                  })
-                  .then(() => {
-                    window.location = '/';
-                  })
-                  .catch((error) => {
-                    console.log(
-                      '❌ %c ERREUR Update post ==> Suppression de l’image actuelle du post échouée :',
-                      'color: orange',
-                      error
-                    );
-                  });
-              });
+              userImageFileName = snapshot.ref._location.path_;
+              console.log(
+                '✅ %c SUCCÈS UpdateProfile ==> Création de la nouvelle image de l’utilisateur réussie :',
+                'color: green',
+                url
+              );
+              MajPhotoURL = url;
+              resolve();
+            });
           })
           .catch((error) => {
             console.log(
@@ -174,22 +106,161 @@ const Card = ({ post }) => {
               'color: orange',
               error
             );
-          });
 
-        //* -------------------------------------------------
-      })
-      .catch((error) => {
-        console.log(
-          "❌ %c ERROR UpdateProfile ==> Capture générale de l'erreur :",
-          'color: orange',
-          error
-        );
-      });
+            reject();
+          });
+      }
+    });
   }
+
+  //* -------------------------------------------------
+
+  //* Transmission des données.
+
+  function submitData() {
+    //
+    let articleName = registerArticleName.current.value;
+    let town = registerTown.current.value;
+    let brand = registerBrand.current.value;
+    let model = registerModel.current.value;
+    let description = registerDescription.current.value;
+
+    return new Promise((resolve, reject) => {
+      if (post) {
+        if (registerArticleName.current.value == '') {
+          articleName = post.articleName;
+        } else {
+          articleName = registerArticleName.current.value;
+        }
+
+        if (registerTown.current.value == '') {
+          town = post.town;
+        } else {
+          town = registerTown.current.value;
+        }
+
+        if (registerBrand.current.value == '') {
+          brand = post.brand;
+        } else {
+          brand = registerBrand.current.value;
+        }
+
+        if (registerModel.current.value == '') {
+          model = post.model;
+        } else {
+          model = registerModel.current.value;
+        }
+
+        if (registerDescription.current.value == '') {
+          description = post.description;
+        } else {
+          description = registerDescription.current.value;
+        }
+
+        if (imageUpload == null) {
+          imageUrl = post.imageUrl;
+          console.log('imageUrl : ', imageUrl);
+        } else {
+          imageUrl = MajPhotoURL;
+        }
+
+        data = {
+          id: post.postId,
+          articleName,
+          town,
+          brand,
+          model,
+          description,
+          imageUrl,
+        };
+
+        dispatch(updateCurentPost(data));
+        resolve();
+        console.log(
+          '✅ %c SUCCÈS UpdateProfile ==> Mise à jour de la data de l’utilisateur :',
+          'color: green',
+          data
+        );
+      } else {
+        console.log(
+          '❌ %c ERREUR Update post ==> Mise à jour de la data de l’utilisateur :',
+          'color: orange'
+        );
+        reject();
+      }
+    });
+  }
+
+  //* -------------------------------------------------
+
+  //* Suppression de l'ancienne image.
+
+  function imageDelector() {
+    return new Promise((resolve, reject) => {
+      if (imageUpload == null) {
+        console.log('imageUpload = vide');
+
+        resolve();
+
+        window.location = '/';
+      } else {
+        const desertRef = ref(storage, post.imageUrl);
+
+        deleteObject(desertRef)
+          .then(() => {
+            console.log(
+              '✅ %c SUCCÈS Update post ==> Suppression de l’image actuelle du post réussie :',
+              'color: green',
+              desertRef
+            );
+
+            resolve();
+          })
+          .then(() => {
+            window.location = '/';
+          })
+          .catch((error) => {
+            console.log(
+              '❌ %c ERREUR Update post ==> Suppression de l’image actuelle du post échouée :',
+              'color: orange',
+              error
+            );
+
+            reject();
+          });
+      }
+    });
+  }
+
+  //* -------------------------------------------------
+
+  //? -------------------------------------------------
+
+  //? Exécution des fonctions.
+
+  async function handlePostButton(e) {
+    e.preventDefault();
+
+    try {
+      //
+      await imageCreator();
+
+      await imageDelector();
+
+      await submitData();
+
+      //
+    } catch (err) {
+      //
+      console.log('err :', err);
+    }
+  }
+
+  //? -------------------------------------------------
 
   //! -------------------------------------------------
 
-  //! Suppression du post.
+  //! LOGIQUE POUR LA SUPPRESSION DU POST.
 
   const handleDeleteButton = () => {
     //
@@ -306,7 +377,6 @@ const Card = ({ post }) => {
                   <input
                     className={styles.inputInfo}
                     placeholder={post.articleName}
-                    required
                     ref={registerArticleName}
                   ></input>
                 </div>
@@ -319,7 +389,6 @@ const Card = ({ post }) => {
                   <input
                     className={styles.inputInfo}
                     placeholder={post.brand}
-                    required
                     ref={registerBrand}
                   ></input>
                 </div>
@@ -332,7 +401,6 @@ const Card = ({ post }) => {
                   <input
                     className={styles.inputInfo}
                     placeholder={post.model}
-                    required
                     ref={registerModel}
                   ></input>
                 </div>
@@ -342,13 +410,12 @@ const Card = ({ post }) => {
               <div className={styles.postItems}>
                 <div className={styles.postItemsTitle}>
                   {' '}
-                  {"Ville où est disponible l'artivcle"}
+                  {"Ville où est disponible l'article"}
                 </div>
                 <div className={styles.postItemsData}>
                   <input
                     className={styles.inputInfo}
                     placeholder={post.town}
-                    required
                     ref={registerTown}
                   ></input>
                 </div>
@@ -374,7 +441,6 @@ const Card = ({ post }) => {
                   <input
                     className={styles.inputInfo}
                     placeholder={post.description}
-                    required
                     ref={registerDescription}
                   ></input>
                 </div>

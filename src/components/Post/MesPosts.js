@@ -4,7 +4,7 @@ import styles from '../../../styles/MesPosts.module.css';
 import { getAuth } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { readUsersPost } from '../../../src/actions/postCRUD.action';
-import MesPostsCard from '../../components/Post/MesPostsCard';
+import UpdatePost from '../../components/Post/UpdatePost';
 import { isEmpty } from '../../../src/utils/Utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -92,7 +92,7 @@ const MesPosts = () => {
         <ul className={styles.postBoxDiv}>
           {!isEmpty(posts[0]) &&
             posts.map((post) => {
-              return <MesPostsCard post={post} key={post.postDate} />;
+              return <UpdatePost post={post} key={post.postDate} />;
             })}
         </ul>
       </div>

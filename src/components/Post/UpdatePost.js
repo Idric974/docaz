@@ -59,7 +59,7 @@ const Card = ({ post }) => {
 
   //! -------------------------------------------------
 
-  //! LOGIQUE POUR LA MISE À JOUR D'UN POST..
+  //! LOGIQUE POUR LA MISE À JOUR D'UN POST.
 
   //? Récupération des informations saisies pour la mise à jour.
 
@@ -372,7 +372,7 @@ const Card = ({ post }) => {
               {''}
               {/** Nom de l'article **/}
               <div className={styles.postItems}>
-                <div className={styles.postItemsTitle}>{'Nom'}</div>
+                <div className={styles.postItemsTitle}>{"Type d'article"}</div>
                 <div className={styles.postItemsData}>
                   <input
                     className={styles.inputInfo}
@@ -412,6 +412,7 @@ const Card = ({ post }) => {
                   {' '}
                   {"Ville où est disponible l'article"}
                 </div>
+
                 <div className={styles.postItemsData}>
                   <input
                     className={styles.inputInfo}
@@ -427,7 +428,7 @@ const Card = ({ post }) => {
                 <div className={styles.postItemsData}>
                   <input
                     className={styles.inputInfo}
-                    placeholder={'100.00€'}
+                    placeholder={post.price}
                     required
                     ref={registerPrix}
                   ></input>

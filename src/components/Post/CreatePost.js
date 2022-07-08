@@ -10,24 +10,23 @@ import { auth } from '../../firebase.config';
 
 const CreatePost = () => {
   //
-  //! I) Affichage des informations concernant l'utilisateur connecté.
 
-  //? Récupération du UID.
+  //! Affichage des informations concernant l'utilisateur connecté.
 
   // console.log(auth._delegate.currentUser);
   let uid = auth._delegate.currentUser.uid;
   console.log('posterId : ', uid);
 
-  //? -------------------------------------------------
+  //! -------------------------------------------------
 
-  //? I) Récupér le profile de l'utilisateur connecté.
+  //! Récupér le profile de l'utilisateur connecté.
 
   const userData = useSelector((state) => state.userCRUDReducer);
   // console.log('userData', userData);
 
-  //? -------------------------------------------------
+  //! -------------------------------------------------
 
-  //* Les constantes.
+  //! Les constantes.
 
   const [userName, setUserName] = useState('');
   const [phone, setPhone] = useState('');
@@ -36,6 +35,7 @@ const CreatePost = () => {
   const [brand, setBrand] = useState('');
   const [model, setModel] = useState('');
   const [town, setTown] = useState('');
+  const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   const [imageUpload, setImageUpload] = useState(null);
   const [postPicture, setPostPicture] = useState(null);
@@ -46,11 +46,7 @@ const CreatePost = () => {
     setphotoURL(userData.photoURL);
   }, [userData.phone, userData.photoURL, userData.userName]);
 
-  //* -------------------------------------------------
-
   const dispatch = useDispatch();
-
-  //? --------------------------------------------------
 
   //! -------------------------------------------------
 
@@ -63,54 +59,115 @@ const CreatePost = () => {
 
   //! -------------------------------------------------
 
-  //! Logique pour la gestion des posts.
+  //! LOGIQUE POUR LA MISE À JOUR D'UN POST.
 
   let date = new Date().getTime();
   let imageUrl;
   let data;
   let postDate = new Date();
+  let userImageFileName;
 
-  const handlePost = async (e) => {
+  //? les fonctions.
+
+  //* Création de l'image.
+
+  function imageCreator() {
+    return new Promise((resolve, reject) => {
+      if (imageUpload == null) return;
+
+      const imageRef = ref(storage, `images/${imageUpload.name + date}`);
+
+      uploadBytes(imageRef, imageUpload)
+        .then((snapshot) => {
+          getDownloadURL(snapshot.ref).then((url) => {
+            //
+            userImageFileName = snapshot.ref._location.path_;
+            console.log(
+              '✅ %c SUCCÈS UpdateProfile ==> Création de la nouvelle image de l’utilisateur réussie :',
+              'color: green',
+              url
+            );
+            imageUrl = url;
+            resolve();
+          });
+        })
+        .catch((error) => {
+          console.log(
+            '❌ %c ERREUR UpdateProfile ==> Création de la nouvelle image de l’utilisateur échouée :',
+            'color: orange',
+            error
+          );
+
+          reject();
+        });
+    });
+  }
+
+  //* -------------------------------------------------
+
+  //* Transmission des données.
+
+  function submitData() {
+    return new Promise((resolve, reject) => {
+      if (userData) {
+        data = {
+          uid,
+          userName,
+          phone,
+          photoURL,
+          articleName,
+          town,
+          price,
+          brand,
+          model,
+          description,
+          imageUrl,
+          postDate,
+        };
+
+        console.log(
+          '✅ %c SUCCÈS CreatePost ==> Transmission des données :',
+          'color: green',
+          data
+        );
+
+        dispatch(addPost(data));
+
+        window.location = '/';
+
+        resolve();
+      } else {
+        console.log(
+          '❌ %c ERREUR UpdateProfile ==> Transmission des données',
+          'color: orange'
+        );
+
+        reject();
+      }
+    });
+  }
+
+  //* -------------------------------------------------
+
+  //? Exécution des fonctions.
+
+  async function handlePost(e) {
     e.preventDefault();
 
-    if (imageUpload == null) return;
+    try {
+      //
+      await imageCreator();
 
-    const imageRef = ref(storage, `images/${imageUpload.name + date}`);
+      await submitData();
 
-    uploadBytes(imageRef, imageUpload)
-      .then((snapshot) => {
-        getDownloadURL(snapshot.ref).then((url) => {
-          //
-          console.log('imageUrl ===> ', url);
-          imageUrl = url;
-        });
-      })
-      .then(() => {
-        setTimeout(() => {
-          data = {
-            uid,
-            userName,
-            phone,
-            photoURL,
-            articleName,
-            town,
-            brand,
-            model,
-            description,
-            imageUrl,
-            postDate,
-          };
-        }, 1000);
+      //
+    } catch (err) {
+      //
+      console.log('err :', err);
+    }
+  }
 
-        // console.log('data : ', data);
-      })
-      .then(() => {
-        setTimeout(() => {
-          dispatch(addPost(data));
-          window.location = '/';
-        }, 1500);
-      });
-  };
+  //? -------------------------------------------------
 
   //! -------------------------------------------------
 
@@ -136,7 +193,7 @@ const CreatePost = () => {
           className={styles.inputTitle}
           name="articleName"
           type="text"
-          placeholder="Nom de l'article"
+          placeholder="Type d'article"
           onChange={(e) => setArticleName(e.target.value)}
           value={articleName}
           required
@@ -169,6 +226,16 @@ const CreatePost = () => {
           placeholder="Ville où l'article est disponible"
           onChange={(e) => setTown(e.target.value)}
           value={town}
+          required
+        />
+
+        <input
+          className={styles.inputTitle}
+          name="price"
+          type="text"
+          placeholder="Prix de l'article"
+          onChange={(e) => setPrice(e.target.value)}
+          value={price}
           required
         />
 

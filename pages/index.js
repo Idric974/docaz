@@ -8,30 +8,13 @@ import SingnIndex from '../src/components/User/SingnIndex';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-  faCode,
-  faHighlighter,
-  faThumbsUp,
-  faThumbsDown,
   faHouse,
-  faRightToBracket,
-  faRightFromBracket,
   faUser,
-  faArrowsToCircle,
   faHeart,
+  faArrowsToCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(
-  faCode,
-  faHighlighter,
-  faThumbsUp,
-  faThumbsDown,
-  faHouse,
-  faRightToBracket,
-  faRightFromBracket,
-  faUser,
-  faArrowsToCircle,
-  faHeart
-);
+library.add(faHouse, faUser, faHeart, faArrowsToCircle);
 
 export default function Home(props) {
   //

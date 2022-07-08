@@ -90,7 +90,7 @@ const Card = ({ post }) => {
               {''}
               {/** Nom de l'article **/}
               <div className={styles.postItems}>
-                <div className={styles.postItemsTitle}>{'Nom'}</div>
+                <div className={styles.postItemsTitle}>{"Type d'article"}</div>
                 <div className={styles.postItemsData}>{post.articleName}</div>
               </div>
 
@@ -111,7 +111,7 @@ const Card = ({ post }) => {
 
               <div className={styles.postItems}>
                 <div className={styles.postItemsTitle}> {'Prix'}</div>
-                <div className={styles.postItemsData}> {post.prix}</div>
+                <div className={styles.postItemsData}> {post.price}</div>
               </div>
 
               {/** Description de l'article **/}

@@ -22,13 +22,14 @@
   /* border: solid red 1px; */
   flex-direction: row;
   justify-content: space-evenly;
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 
 .tab {
   /* border: solid green 1px; */
+  width: 160px;
   border-radius: 10px 10px 0px 0px;
-  padding: 5px 5px 5px 5px;
+  padding: 10px 10px 10px 10px;
   background-color: var(--Primary);
   color: white;
   margin: 10px 0px 0px 0px;

@@ -19,7 +19,6 @@ library.add(faSpinner, faPhone);
 
 const Card = ({ post }) => {
   //
-
   // console.log('⭐ POST DATA ⭐ ', post);
 
   //! Les variables.

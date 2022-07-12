@@ -16,7 +16,9 @@
 .handleProfilButtonsSupprimer,
 .handleProfilButtonsAnnonces,
 .inputInfo,
-.usersInfoBox {
+.usersInfoBox,
+.buttonBox,
+.profileButton {
   /* border: solid green 3px; */
   width: 100%;
   display: flex;
@@ -86,9 +88,27 @@
   /* border: solid green 1px; */
   width: 100%;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  font-size: 1.8rem;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 1.5rem;
+  border-bottom: solid 1px black;
+  margin: 10px 0px 15px 0px;
+}
+
+.info {
+  /* border: solid red 1px; */
+  font-weight: bold;
+  padding-left: 10px;
+}
+
+.usersInfoImageBox {
+  /* border: solid green 1px; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.5rem;
+  border-bottom: solid 1px black;
   margin: 10px 0px 15px 0px;
 }
 
@@ -98,19 +118,22 @@
   justify-content: left;
 }
 
-.info1 {
-  /* border: solid red 1px; */
-  font-weight: bold;
-  padding-right: 10px;
-}
-
 .usersInfoImage {
-  width: 100%;
+  width: 70%;
   border-radius: 50%;
   margin: 10px 0px 10px 0px;
 }
 
-/** Bouton gestion profl **/
+.inputInfo {
+  /* border: solid red 1px; */
+  width: 100%;
+  align-items: center;
+  margin: 0;
+  border: none;
+  text-align: left;
+}
+
+/** Bouton gestion profil **/
 
 .handleProfilButtonsBox {
   /* border: solid green 3px; */
@@ -166,4 +189,16 @@
 
 .prewieuImage {
   width: 100%;
+}
+
+.buttonBox {
+  /* border: solid green 1px; */
+  padding-bottom: 15px;
+}
+
+.profileButton {
+  /* border: solid green 1px; */
+  width: 70%;
+  height: auto;
+  padding: 10px 10px 10px 10px;
 }

@@ -74,11 +74,11 @@ export const updateLogedUser = (data, uid) => {
         data
       );
 
-      console.log(
-        "%c ✅ SUCCÈS : userCRUD.actions ==> UPDATE_USER ==> Mise à jour d'un utilisateur :",
-        'color: green',
-        res.data
-      );
+      // console.log(
+      //   "%c ✅ SUCCÈS : userCRUD.actions ==> UPDATE_USER ==> Mise à jour d'un utilisateur :",
+      //   'color: green',
+      //   res.data
+      // );
 
       dispatch({ type: UPDATE_USER, payload: res.data });
     } catch (err) {

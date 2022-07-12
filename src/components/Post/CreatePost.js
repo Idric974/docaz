@@ -13,9 +13,8 @@ const CreatePost = () => {
 
   //! Affichage des informations concernant l'utilisateur connecté.
 
-  // console.log(auth._delegate.currentUser);
   let uid = auth._delegate.currentUser.uid;
-  console.log('posterId : ', uid);
+  // console.log('posterId : ', uid);
 
   //! -------------------------------------------------
 

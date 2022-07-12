@@ -21,14 +21,16 @@ library.add(
 );
 
 const Card = ({ post }) => {
-  // console.log(' ⭐ POST DATA ⭐ ', post);
+  console.log(' ⭐ POST DATA ⭐ ', post);
 
   const [isLoading, setIsLoading] = useState(false);
 
   //! Le profil de l'auteur du post.
 
   const usersData = useSelector((state) => state.userCRUDReducer);
-  // console.log("⭐ CompCard ===>  Le profil de l'auteur du post :", usersData);
+  useEffect(() => {
+    console.log("⭐ CompCard ===>  Le profil de l'auteur du post :", usersData);
+  }, [usersData]);
 
   //! --------------------------------------------------
 

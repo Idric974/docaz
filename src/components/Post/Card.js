@@ -12,13 +12,7 @@ import {
   faHeart,
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(
-  faThumbsUp,
-
-  faSpinner,
-  faPhone,
-  faHeart
-);
+library.add(faThumbsUp, faSpinner, faPhone, faHeart);
 
 const Card = ({ post }) => {
   console.log(' ⭐ POST DATA ⭐ ', post);
@@ -28,9 +22,10 @@ const Card = ({ post }) => {
   //! Le profil de l'auteur du post.
 
   const usersData = useSelector((state) => state.userCRUDReducer);
-  useEffect(() => {
-    console.log("⭐ CompCard ===>  Le profil de l'auteur du post :", usersData);
-  }, [usersData]);
+
+  // useEffect(() => {
+  //   console.log("⭐ CompCard ===>  Le profil de l'auteur du post :", usersData);
+  // }, [usersData]);
 
   //! --------------------------------------------------
 

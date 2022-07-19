@@ -32,9 +32,6 @@ const SignUp = () => {
 
   //? -------------------------------------------------
 
-  const [imageUpload, setimageUpload] = useState(null);
-  const [postPicture, setPostPicture] = useState(null);
-
   //! -------------------------------------------------
 
   //! les variables.
@@ -48,6 +45,9 @@ const SignUp = () => {
   //! -------------------------------------------------
 
   //! Logique pour la gestion de l'image.
+
+  const [imageUpload, setimageUpload] = useState(null);
+  const [postPicture, setPostPicture] = useState(null);
 
   const handlePicture = (e) => {
     setPostPicture(URL.createObjectURL(e.target.files[0])); //* Prévisualisation.

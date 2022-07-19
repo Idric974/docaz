@@ -58,7 +58,7 @@ const MesPosts = () => {
   const dispatch = useDispatch();
 
   const posts = useSelector((state) => state.postCRUDReducer);
-  //console.log('MesPosts ==> Liste des posts ===> ', posts);
+  // console.log('MesPosts ==> Liste des posts ===> ', posts);
 
   useEffect(() => {
     dispatch(readUsersPost(uid));

@@ -1,9 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import styles from '../../../styles/Card.module.css';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { dateParser, isEmpty } from '../../utils/Utils';
-import { updateCurentPost, deleteOnePost } from '../../actions/postCRUD.action';
+import { dateParser } from '../../utils/Utils';
 import {
   ref,
   uploadBytes,
@@ -11,6 +10,8 @@ import {
   getStorage,
   deleteObject,
 } from 'firebase/storage';
+import { doc, deleteDoc, setDoc } from 'firebase/firestore';
+import db from '../../../utils/firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faSpinner, faPhone } from '@fortawesome/free-solid-svg-icons';
@@ -24,7 +25,6 @@ const Card = ({ post }) => {
   //! Les variables.
 
   let data;
-  let dataId;
   let userImageFileName;
   let MajPhotoURL;
   let imageUrl;
@@ -66,7 +66,7 @@ const Card = ({ post }) => {
   const registerBrand = useRef();
   const registerDescription = useRef();
   const registerModel = useRef();
-  const registerPrix = useRef();
+  const registerPrice = useRef();
   const registerTown = useRef();
 
   //? -------------------------------------------------
@@ -122,6 +122,7 @@ const Card = ({ post }) => {
     let town = registerTown.current.value;
     let brand = registerBrand.current.value;
     let model = registerModel.current.value;
+    let price = registerPrice.current.value;
     let description = registerDescription.current.value;
 
     return new Promise((resolve, reject) => {
@@ -150,6 +151,12 @@ const Card = ({ post }) => {
           model = registerModel.current.value;
         }
 
+        if (registerPrice.current.value == '') {
+          price = post.price;
+        } else {
+          price = registerPrice.current.value;
+        }
+
         if (registerDescription.current.value == '') {
           description = post.description;
         } else {
@@ -163,22 +170,20 @@ const Card = ({ post }) => {
           imageUrl = MajPhotoURL;
         }
 
-        data = {
-          id: post.postId,
+        setDoc(doc(db, 'posts', post.postId), {
           articleName,
           town,
           brand,
           model,
+          price,
           description,
           imageUrl,
-        };
+        });
 
-        dispatch(updateCurentPost(data));
         resolve();
         console.log(
           '✅ %c SUCCÈS UpdateProfile ==> Mise à jour de la data de l’utilisateur :',
-          'color: green',
-          data
+          'color: green'
         );
       } else {
         console.log(
@@ -201,7 +206,7 @@ const Card = ({ post }) => {
 
         resolve();
 
-        window.location = '/';
+        // window.location = '/';
       } else {
         const desertRef = ref(storage, post.imageUrl);
 
@@ -261,64 +266,106 @@ const Card = ({ post }) => {
 
   //! LOGIQUE POUR LA SUPPRESSION DU POST.
 
-  const handleDeleteButton = () => {
-    //
+  //* Suppression de l'image du post.
 
-    let id = post.postId;
-    console.log('handleDeleteButton ===> id :', id);
-
-    let postDeleter = new Promise(function (resolve, reject) {
+  function postImageDelector() {
+    return new Promise((resolve, reject) => {
       if (post) {
-        resolve();
-      } else {
-        reject();
-      }
-    });
-
-    let action = async () => {
-      let go = await postDeleter;
-      return go;
-    };
-
-    action()
-      .then(() => {
-        dataId = { id };
-
-        dispatch(updateCurentPost(data));
-        dispatch(deleteOnePost(dataId));
-      })
-
-      //* Suppression de l'ancienne image du post.
-      //
-      .then(() => {
         const desertRef = ref(storage, post.imageUrl);
+
         deleteObject(desertRef)
           .then(() => {
             console.log(
-              '✅ %c SUCCÈS Update post ==> Suppression de l’image actuelle du post réussie :',
+              '✅ %c SUCCÈS Delete post ==> Suppression de l’image du post réussie :',
               'color: green',
               desertRef
             );
+
+            resolve();
           })
-          .then(() => {
-            window.location = '/';
-          })
+
           .catch((error) => {
             console.log(
-              '❌ %c ERREUR Update post ==> Suppression de l’image actuelle du post échouée :',
+              '❌ %c ERREUR Delete post ==> Suppression de l’image du post échouée :',
               'color: orange',
               error
             );
+
+            reject();
           });
-      })
-      .catch((error) => {
+      } else {
         console.log(
-          '❌ %c ERROR UpdateProfile ==> Suppression du post. :',
+          '❌ %c ERREUR Update post ==> Suppression de l’image actuelle du post échouée :',
           'color: orange',
           error
         );
-      });
-  };
+
+        reject();
+      }
+    });
+  }
+
+  //* -------------------------------------------------
+
+  //* Suppression de la data du post.
+
+  function postDataDelector() {
+    return new Promise((resolve, reject) => {
+      if (post) {
+        console.log('post.postId : ', post);
+
+        deleteDoc(doc(db, 'posts', post.postId))
+          .then(() => {
+            console.log(
+              '✅ %c SUCCÈS Delete post ==> Suppression de la data du post réussie :',
+              'color: green',
+              desertRef
+            );
+            resolve();
+          })
+          .catch((error) => {
+            console.log(
+              '❌ %c ERREUR Delete post ==> Suppression de la data du post échouée :',
+              'color: orange',
+              error
+            );
+
+            reject();
+          });
+      } else {
+        console.log(
+          '❌ %c ERREUR Update post ==> Suppression de la data du post échouée :',
+          'color: orange',
+          error
+        );
+
+        reject();
+      }
+    });
+  }
+
+  //* -------------------------------------------------
+
+  //? Exécution des fonctions.
+
+  async function handlePostDeletor(e) {
+    e.preventDefault();
+
+    try {
+      //
+
+      await postImageDelector();
+
+      await postDataDelector();
+
+      //
+    } catch (err) {
+      //
+      console.log('err :', err);
+    }
+  }
+
+  //? -------------------------------------------------
 
   //! -------------------------------------------------
 
@@ -429,7 +476,7 @@ const Card = ({ post }) => {
                     className={styles.inputInfo}
                     placeholder={post.price}
                     required
-                    ref={registerPrix}
+                    ref={registerPrice}
                   ></input>
                 </div>
               </div>
@@ -500,7 +547,7 @@ const Card = ({ post }) => {
 
               <button
                 className={styles.handlePostButton}
-                onClick={handleDeleteButton}
+                onClick={handlePostDeletor}
               >
                 Supprimer Annonce
               </button>

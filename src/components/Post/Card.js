@@ -15,7 +15,13 @@ import {
 library.add(faThumbsUp, faSpinner, faPhone, faHeart);
 
 const Card = ({ post }) => {
-  console.log(' ⭐ POST DATA ⭐ ', post);
+  // useEffect(() => {
+  //   console.log(
+  //     '%c ✅ SUCCÈS : Card.js ==> Liste des post :',
+  //     'color: green',
+  //     post
+  //   );
+  // });
 
   const [isLoading, setIsLoading] = useState(false);
 

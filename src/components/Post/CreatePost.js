@@ -1,17 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
 import styles from '../../../styles/PostHandler.module.css';
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { timestampParser } from '../../utils/Utils';
-import { addPost } from '../../actions/postCRUD.action';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../firebase';
 import { auth } from '../../firebase.config';
+import { collection, addDoc } from 'firebase/firestore';
+import db from '../../../utils/firebase';
 
 const CreatePost = () => {
   //
 
-  //! Affichage des informations concernant l'utilisateur connecté.
+  //! Récupération du uid de l'utilisateur connecté.
 
   let uid = auth._delegate.currentUser.uid;
   // console.log('posterId : ', uid);
@@ -49,7 +50,7 @@ const CreatePost = () => {
 
   //! -------------------------------------------------
 
-  //! Logique pour la gestion de l'image.
+  //! Logique pour la gestion de l'image du post.
 
   const handlePicture = (e) => {
     setPostPicture(URL.createObjectURL(e.target.files[0])); //* Prévisualisation.
@@ -58,7 +59,7 @@ const CreatePost = () => {
 
   //! -------------------------------------------------
 
-  //! LOGIQUE POUR LA MISE À JOUR D'UN POST.
+  //! LOGIQUE POUR LA CREATION D'UN POST.
 
   let date = new Date().getTime();
   let imageUrl;
@@ -109,7 +110,7 @@ const CreatePost = () => {
   function submitData() {
     return new Promise((resolve, reject) => {
       if (userData) {
-        data = {
+        const docRef = addDoc(collection(db, 'posts'), {
           uid,
           userName,
           phone,
@@ -122,22 +123,38 @@ const CreatePost = () => {
           description,
           imageUrl,
           postDate,
-        };
+          userImageFileName,
+        });
 
         console.log(
-          '✅ %c SUCCÈS CreatePost ==> Transmission des données :',
-          'color: green',
-          data
+          '✅ %c SUCCÈS UpdateProfile ==> Transmission des données réussie :',
+          'color: green'
         );
-
-        dispatch(addPost(data));
-
-        window.location = '/';
 
         resolve();
       } else {
         console.log(
           '❌ %c ERREUR UpdateProfile ==> Transmission des données',
+          'color: orange'
+        );
+
+        reject();
+      }
+    });
+  }
+
+  //* -------------------------------------------------
+
+  //* Retour à l'accueil.
+
+  function backHome() {
+    return new Promise((resolve, reject) => {
+      if (userData) {
+        window.location = '/';
+        resolve();
+      } else {
+        console.log(
+          "❌ %c ERREUR UpdateProfile ==> Retour à l'accueil",
           'color: orange'
         );
 
@@ -161,6 +178,8 @@ const CreatePost = () => {
 
       await submitData();
 
+      await backHome();
+
       //
     } catch (err) {
       //
@@ -175,11 +194,16 @@ const CreatePost = () => {
   //! Logique pour l'anulation d'un post.
 
   const cancelPost = () => {
-    setName('');
+    setUserName('');
+    setPhone('');
+    setphotoURL('');
+    setArticleName('');
     setBrand('');
     setModel('');
     setTown('');
+    setPrice('');
     setDescription('');
+    setImageUpload('');
     setPostPicture('');
   };
 

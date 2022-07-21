@@ -15,13 +15,13 @@ import {
 library.add(faThumbsUp, faSpinner, faPhone, faHeart);
 
 const Card = ({ post }) => {
-  // useEffect(() => {
-  //   console.log(
-  //     '%c ✅ SUCCÈS : Card.js ==> Liste des post :',
-  //     'color: green',
-  //     post
-  //   );
-  // });
+  useEffect(() => {
+    console.log(
+      '%c ✅ SUCCÈS : Card.js ==> Liste des post :',
+      'color: green',
+      post
+    );
+  });
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -72,9 +72,7 @@ const Card = ({ post }) => {
                 </div>
 
                 {/** Date de création du post **/}
-                <div className={styles.postDate}>
-                  {dateParser(post.postDate)}
-                </div>
+                <div className={styles.postDate}>{post.postDate}</div>
               </div>
 
               <div className={styles.phoneBox}>

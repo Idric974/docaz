@@ -62,9 +62,11 @@ const CreatePost = () => {
   //! LOGIQUE POUR LA CREATION D'UN POST.
 
   let date = new Date().getTime();
+  let postDate = timestampParser(Date.now());
+  console.log('La date ===> new Date() ', postDate);
   let imageUrl;
   let data;
-  let postDate = new Date();
+
   let userImageFileName;
 
   //? les fonctions.
@@ -124,12 +126,13 @@ const CreatePost = () => {
           imageUrl,
           postDate,
           userImageFileName,
+        }).then((data) => {
+          console.log(
+            '✅ %c SUCCÈS UpdateProfile ==> Transmission des données réussie ==> postId :',
+            'color: green',
+            data._key.path.segments[1]
+          );
         });
-
-        console.log(
-          '✅ %c SUCCÈS UpdateProfile ==> Transmission des données réussie :',
-          'color: green'
-        );
 
         resolve();
       } else {

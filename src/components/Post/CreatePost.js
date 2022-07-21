@@ -181,7 +181,7 @@ const CreatePost = () => {
 
       await submitData();
 
-      // await backHome();
+      await backHome();
 
       //
     } catch (err) {

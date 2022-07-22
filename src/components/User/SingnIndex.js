@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../../../styles/SingnIndex.module.css';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useSelector } from 'react-redux';
 import ReadProfileIndex from './ReadProfileIndex';
 import SignUp from './SignUp';
@@ -7,6 +8,21 @@ import SignIn from './SignIn';
 
 const SingnIndex = (props) => {
   //
+
+  //! Recupération de l'utilisateur Uid.
+
+  // let uid;
+
+  const auth = getAuth();
+  const user = auth.currentUser;
+  // if (user !== null) {
+  //   uid = user.uid;
+  // }
+
+  // console.log('⭐ CurrentUser Uid    ===> (ReadProfil) : ', user);
+
+  //! -------------------------------------------------
+
   const [signUpModal, setSignUpModal] = useState(props.signup);
   const [signInModal, setSignInModal] = useState(props.signin);
   const [readProfileIndexModal, setReadProfileIndexModal] = useState(
@@ -18,20 +34,25 @@ const SingnIndex = (props) => {
 
   //? I) Récupéra Le profile de l'utilisateur connecté.
 
-  const userData = useSelector((state) => state.userCRUDReducer);
-  // useEffect(() => {
-  //   console.log('userData SingnIndex ==> ', userData);
-  // }, [userData]);
+  const data = useSelector((state) => state.userCRUDReducer);
+  // console.log('data :============>', data);
+
+  const [userData, setUserData] = useState('');
+
+  useEffect(() => {
+    setUserData(data);
+    // console.log('userData SingnIndex ======> ', userData);
+  }, [data, userData]);
 
   //? --------------------------------------------------
 
   useEffect(() => {
-    if (userData) {
+    if (user) {
       setReadProfileIndexModal(true);
     } else {
       setSignUpModal(true);
     }
-  }, [readProfileIndexModal, userData]);
+  }, [user]);
 
   const handleModals = (e) => {
     if (e.target.id === 'register') {
@@ -45,7 +66,7 @@ const SingnIndex = (props) => {
 
   return (
     <div className={styles.box}>
-      {userData ? (
+      {user ? (
         <div className={styles.profileBox}>
           {readProfileIndexModal && <ReadProfileIndex />}
         </div>

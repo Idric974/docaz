@@ -7,7 +7,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../firebase';
 import { auth } from '../../firebase.config';
 import { collection, addDoc } from 'firebase/firestore';
-import db from '../../../utils/firebase';
+import { db } from '../../../utils/firebase';
 
 const CreatePost = () => {
   //
@@ -22,7 +22,7 @@ const CreatePost = () => {
   //! Récupér le profile de l'utilisateur connecté.
 
   const userData = useSelector((state) => state.userCRUDReducer);
-  // console.log('userData', userData);
+  console.log('userData', userData);
 
   //! -------------------------------------------------
 
@@ -37,8 +37,6 @@ const CreatePost = () => {
   const [town, setTown] = useState('');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
-  const [imageUpload, setImageUpload] = useState(null);
-  const [postPicture, setPostPicture] = useState(null);
 
   useEffect(() => {
     setUserName(userData.userName);
@@ -52,6 +50,9 @@ const CreatePost = () => {
 
   //! Logique pour la gestion de l'image du post.
 
+  const [imageUpload, setImageUpload] = useState(null);
+  const [postPicture, setPostPicture] = useState(null);
+
   const handlePicture = (e) => {
     setPostPicture(URL.createObjectURL(e.target.files[0])); //* Prévisualisation.
     setImageUpload(e.target.files[0]); //* upload.
@@ -63,7 +64,6 @@ const CreatePost = () => {
 
   let date = new Date().getTime();
   let postDate = timestampParser(Date.now());
-  console.log('La date ===> new Date() ', postDate);
   let imageUrl;
   let data;
 
@@ -85,7 +85,7 @@ const CreatePost = () => {
             //
             userImageFileName = snapshot.ref._location.path_;
             console.log(
-              '✅ %c SUCCÈS UpdateProfile ==> Création de la nouvelle image de l’utilisateur réussie :',
+              '✅ %c SUCCÈS Create post ==> Création de la nouvelle image de l’utilisateur réussie :',
               'color: green',
               url
             );
@@ -95,7 +95,7 @@ const CreatePost = () => {
         })
         .catch((error) => {
           console.log(
-            '❌ %c ERREUR UpdateProfile ==> Création de la nouvelle image de l’utilisateur échouée :',
+            '❌ %c ERREUR Create post ==> Création de la nouvelle image de l’utilisateur échouée :',
             'color: orange',
             error
           );
@@ -111,7 +111,7 @@ const CreatePost = () => {
 
   function submitData() {
     return new Promise((resolve, reject) => {
-      if (userData) {
+      if (imageUpload !== null) {
         const docRef = addDoc(collection(db, 'posts'), {
           uid,
           userName,
@@ -126,18 +126,32 @@ const CreatePost = () => {
           imageUrl,
           postDate,
           userImageFileName,
-        }).then((data) => {
-          console.log(
-            '✅ %c SUCCÈS UpdateProfile ==> Transmission des données réussie ==> postId :',
-            'color: green',
-            data._key.path.segments[1]
-          );
-        });
+        })
+          .then((data) => {
+            console.log(
+              '✅ %c SUCCÈS Create post ==> Transmission des données réussie ==> postId :',
+              'color: green',
+              data._key.path.segments[1]
+            );
+
+            console.log(
+              '✅ %c SUCCÈS Create post ==> Transmission des données réussie ==> postId :',
+              'color: green',
+              docRef.id
+            );
+          })
+          .catch((e) => {
+            console.log(
+              '❌ %c CATCH ERREUR Create post ==> Transmission des données',
+              'color: orange',
+              e
+            );
+          });
 
         resolve();
       } else {
         console.log(
-          '❌ %c ERREUR UpdateProfile ==> Transmission des données',
+          '❌ %c ERREUR Create post ==> Transmission des données',
           'color: orange'
         );
 
@@ -177,11 +191,12 @@ const CreatePost = () => {
 
     try {
       //
+
       await imageCreator();
 
       await submitData();
 
-      await backHome();
+      // await backHome();
 
       //
     } catch (err) {

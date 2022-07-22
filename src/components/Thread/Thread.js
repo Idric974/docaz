@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/no-unescaped-entities */
 import React, { useEffect, useState } from 'react';
+import styles from '../../../styles/Thread.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { readAllPost } from '../../actions/postCRUD.action';
-import styles from '../../../styles/Thread.module.css';
 import Card from '../Post/Card';
 import { isEmpty } from '../../utils/Utils';
 

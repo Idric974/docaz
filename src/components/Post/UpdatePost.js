@@ -10,8 +10,8 @@ import {
   getStorage,
   deleteObject,
 } from 'firebase/storage';
-import { doc, deleteDoc, setDoc } from 'firebase/firestore';
-import db from '../../../utils/firebase';
+import { doc, deleteDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../../../utils/firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faSpinner, faPhone } from '@fortawesome/free-solid-svg-icons';
@@ -87,6 +87,7 @@ const Card = ({ post }) => {
 
         uploadBytes(imageRef, imageUpload)
           .then((snapshot) => {
+            //
             getDownloadURL(snapshot.ref).then((url) => {
               //
               userImageFileName = snapshot.ref._location.path_;
@@ -96,6 +97,7 @@ const Card = ({ post }) => {
                 url
               );
               MajPhotoURL = url;
+
               resolve();
             });
           })
@@ -170,7 +172,9 @@ const Card = ({ post }) => {
           imageUrl = MajPhotoURL;
         }
 
-        setDoc(doc(db, 'posts', post.postId), {
+        const postData = doc(db, 'posts', post.postId);
+
+        updateDoc(postData, {
           articleName,
           town,
           brand,
@@ -178,13 +182,15 @@ const Card = ({ post }) => {
           price,
           description,
           imageUrl,
+        }).then((data) => {
+          console.log(
+            '✅ %c SUCCÈS UpdateProfile ==> Mise à jour de la data de l’utilisateur :',
+            'color: green',
+            data
+          );
         });
 
         resolve();
-        console.log(
-          '✅ %c SUCCÈS UpdateProfile ==> Mise à jour de la data de l’utilisateur :',
-          'color: green'
-        );
       } else {
         console.log(
           '❌ %c ERREUR Update post ==> Mise à jour de la data de l’utilisateur :',
@@ -205,8 +211,6 @@ const Card = ({ post }) => {
         console.log('imageUpload = vide');
 
         resolve();
-
-        // window.location = '/';
       } else {
         const desertRef = ref(storage, post.imageUrl);
 
@@ -220,9 +224,6 @@ const Card = ({ post }) => {
 
             resolve();
           })
-          .then(() => {
-            window.location = '/';
-          })
           .catch((error) => {
             console.log(
               '❌ %c ERREUR Update post ==> Suppression de l’image actuelle du post échouée :',
@@ -232,6 +233,26 @@ const Card = ({ post }) => {
 
             reject();
           });
+      }
+    });
+  }
+
+  //* -------------------------------------------------
+
+  //* Retour à l'accueil.
+
+  function backHome() {
+    return new Promise((resolve, reject) => {
+      if (post) {
+        window.location = '/';
+        resolve();
+      } else {
+        console.log(
+          "❌ %c ERREUR UpdateProfile ==> Retour à l'accueil",
+          'color: orange'
+        );
+
+        reject();
       }
     });
   }
@@ -252,6 +273,8 @@ const Card = ({ post }) => {
       await imageDelector();
 
       await submitData();
+
+      await backHome();
 
       //
     } catch (err) {

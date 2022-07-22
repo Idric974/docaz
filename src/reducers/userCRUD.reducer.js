@@ -2,6 +2,7 @@ import {
   CREATE_USER,
   UPDATE_USER,
   READ_USER,
+  READ_USER2,
   DELETE_USER,
 } from '../actions/userCRUD.actions';
 
@@ -13,6 +14,9 @@ export default function userCRUDReducer(state = initialState, action) {
       return action.payload;
 
     case READ_USER:
+      return action.payload;
+
+    case READ_USER2:
       return action.payload;
 
     case UPDATE_USER:

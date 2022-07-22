@@ -1,38 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import styles from '../../../styles/SingUp.module.css';
-import { createUser } from '../../actions/userCRUD.actions';
+import { collection, addDoc, doc, setDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../firebase';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { db } from '../../../utils/firebase';
 
 const SignUp = () => {
   //
-
-  //! Les constantes.
-
-  const dispatch = useDispatch();
-  const auth = getAuth();
-
-  //? Create user.
-
-  const registerFirstName = useRef();
-  const registerLastName = useRef();
-  const registerUserName = useRef();
-  const registerPhone = useRef();
-  const registerTown = useRef();
-
-  //? -------------------------------------------------
-
-  //? Create user.
-
-  const registerEmail = useRef();
-  const registerPassword = useRef();
-
-  //? -------------------------------------------------
-
-  //! -------------------------------------------------
 
   //! les variables.
 
@@ -40,6 +16,7 @@ const SignUp = () => {
   let uid;
   let date = new Date().getTime();
   let photoURL;
+  let imageUrl;
   let userImageFileName;
 
   //! -------------------------------------------------
@@ -58,169 +35,190 @@ const SignUp = () => {
 
   //! Logique pour la création d'un utiliateur.
 
-  async function handleRegister(e) {
-    e.preventDefault();
-    //
-    //? Create user.
+  //? les fonctions.
 
-    console.log('Prénom : ', registerFirstName.current.value);
-    console.log('Nom : ', registerLastName.current.value);
-    console.log('Nom d’utilisateur : ', registerUserName.current.value);
-    console.log('Téléphone : ', registerPhone.current.value);
-    console.log('Ville : ', registerTown.current.value);
+  //* Création de l'image.
 
-    //? -------------------------------------------------
+  function imageCreator() {
+    return new Promise((resolve, reject) => {
+      let imageRef;
 
-    //? Auth
+      if (imageUpload == null) {
+        imageRef = ref(storage, `images/${'avatar' + date}`);
+      } else {
+        imageRef = ref(storage, `images/${imageUpload.name + date}`);
+      }
 
-    console.log('Email : ', registerEmail.current.value);
-    console.log('Password : ', registerPassword.current.value);
+      uploadBytes(imageRef, imageUpload)
+        .then((snapshot) => {
+          getDownloadURL(snapshot.ref).then((url) => {
+            //
+            userImageFileName = snapshot.ref._location.path_;
+            console.log(
+              '✅ %c SUCCÈS Create post ==> Création de la nouvelle image de l’utilisateur réussie :',
+              'color: green',
+              url
+            );
+            photoURL = url;
+            resolve();
+          });
+        })
+        .catch((error) => {
+          console.log(
+            '❌ %c ERREUR Create post ==> Création de la nouvelle image de l’utilisateur échouée :',
+            'color: orange',
+            error
+          );
 
-    //? -------------------------------------------------
+          reject();
+        });
+    });
+  }
 
-    //? Procédure de création d'un utilisateur.
+  //* -------------------------------------------------
 
-    let usersCreator = new Promise(function (resolve, reject) {
-      if (registerFirstName) {
+  //* Création de l'utilisateur pour son authentification.
+
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+
+  const auth = getAuth();
+
+  function authCreator() {
+    return new Promise((resolve, reject) => {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(async (userAuth) => {
+          uid = userAuth.user.auth.currentUser.auth.currentUser.uid;
+
+          console.log(
+            "✅ %c SUCCÈS Create post ==> Création de l'utilisateur pour son authentification réussie : ",
+            'color: green',
+            uid
+          );
+          resolve();
+        })
+        .catch((e) => {
+          console.log(
+            '❌ %c CATCH ERREUR SignUp ==> uid généré pour authentification :',
+            'color: orange',
+            e
+          );
+          reject();
+        });
+    });
+  }
+
+  //* -------------------------------------------------
+
+  //* Transmission des données.
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [userName, setUserName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [town, setTown] = useState('');
+
+  function submitData() {
+    return new Promise((resolve, reject) => {
+      if (imageUpload == null) {
+        setDoc(doc(db, 'users', uid), {
+          userId: uid,
+          firstName,
+          lastName,
+          userName,
+          phone,
+          town,
+          email,
+          userImageFileName,
+          photoURL:
+            'https://firebasestorage.googleapis.com/v0/b/docaz-cb118.appspot.com/o/images%2FAvatar%2FpersonaDocaz.jpg?alt=media&token=dedeb9f7-c9b4-41e6-bc7e-2dc45d233230',
+        })
+          .then((data) => {
+            console.log(
+              '✅ %c SUCCÈS Create post ==> Transmission des données : ',
+              'color: green'
+            );
+            resolve();
+          })
+          .catch((e) => {
+            console.log('ERREUR data : ', e);
+            console.log(
+              '❌ %c CATCH ERREUR SignUp ==> Transmission des données :',
+              'color: orange',
+              e
+            );
+            reject;
+          });
+      } else {
+        setDoc(doc(db, 'users', uid), {
+          userId: uid,
+          firstName,
+          lastName,
+          userName,
+          phone,
+          town,
+          email,
+          userImageFileName,
+          photoURL,
+        })
+          .then(() => {
+            // console.log('data : ', data);
+            resolve();
+          })
+          .catch((e) => {
+            console.log('ERREUR data : ', e);
+            reject;
+          });
+      }
+    });
+  }
+
+  //* -------------------------------------------------
+
+  //* Retour à l'accueil.
+
+  function backHome() {
+    return new Promise((resolve, reject) => {
+      if (imageUpload == null) {
+        window.location = '/';
         resolve();
       } else {
+        console.log(
+          "❌ %c ERREUR UpdateProfile ==> Retour à l'accueil",
+          'color: orange'
+        );
+
         reject();
       }
     });
-
-    let action = async () => {
-      let go = await usersCreator;
-      return go;
-    };
-
-    action()
-      //
-      //* Création de l’image l’utilisateur actuelle.
-
-      .then(() => {
-        //
-
-        let imageRef;
-
-        if (imageUpload == null) {
-          imageRef = ref(storage, `images/${'avatar' + date}`);
-        } else {
-          imageRef = ref(storage, `images/${imageUpload.name + date}`);
-        }
-
-        uploadBytes(imageRef, imageUpload).then((snapshot) => {
-          //
-          getDownloadURL(snapshot.ref)
-            .then((url) => {
-              //
-              userImageFileName = snapshot.ref._location.path_;
-
-              photoURL = url;
-
-              console.log(
-                '✅ %c SUCCÈS SignUp ==> Création de l’image l’utilisateur actuelle réussie :',
-                'color: green',
-                url
-              );
-            })
-
-            .then(() => {
-              //
-              //* Création de l'utilisateur pour son authentification.
-
-              createUserWithEmailAndPassword(
-                auth,
-                registerEmail.current.value,
-                registerPassword.current.value
-              )
-                .then(async (userAuth) => {
-                  console.log(
-                    '%c ✅ SUCCÈS : SignUp ==> Utilisteur créé : ',
-                    'color: green'
-                  );
-                  uid = userAuth.user.auth.currentUser.auth.currentUser.uid;
-                  console.log(
-                    '%c ✅ SUCCÈS : SignUp ==> uid généré : ',
-                    'color:green',
-                    uid
-                  );
-                })
-
-                //* -------------------------------------------------
-
-                //* Transmission des données user au back.
-
-                .then(() => {
-                  //
-
-                  let urlAvatar;
-
-                  if (imageUpload == null) {
-                    urlAvatar =
-                      'https://firebasestorage.googleapis.com/v0/b/docaz-cb118.appspot.com/o/images%2FAvatar%2FpersonaDocaz.jpg?alt=media&token=dedeb9f7-c9b4-41e6-bc7e-2dc45d233230';
-                  } else {
-                    urlAvatar = photoURL;
-                  }
-
-                  data = {
-                    userId: uid,
-                    userImageFileName: userImageFileName,
-                    firstName: registerFirstName.current.value,
-                    lastName: registerLastName.current.value,
-                    userName: registerUserName.current.value,
-                    phone: registerPhone.current.value,
-                    town: registerTown.current.value,
-
-                    photoURL: urlAvatar,
-                  };
-
-                  console.log(
-                    '%c ✅ SUCCÈS : SignUp ==> Données transmises : ',
-                    'color:green',
-                    data
-                  );
-
-                  dispatch(createUser(data));
-
-                  window.location = '/';
-                })
-
-                //* Catch des erreurs lors de la création de l'utilisateur pour son authentification.
-
-                .catch((error) => {
-                  //
-                  const errorCode = error.code;
-
-                  console.log(
-                    "❌ %c ERREUR CODE SignUp ==> Création de l'utilisateur pour son authentification échouée :",
-                    'color: orange',
-                    errorCode
-                  );
-
-                  const errorMessage = error.message;
-
-                  console.log(
-                    "❌ %c ERREUR MESSAGE SignUp ==> Création de l'utilisateur pour son authentification échouée :",
-                    'color: orange',
-                    errorMessage
-                  );
-                });
-
-              //* -------------------------------------------------
-            });
-        });
-      })
-
-      //* Catch des erreurs.
-
-      .catch((error) => {
-        console.log(
-          "❌ %c ERROR SignUp ==> Capture générale de l'erreur :",
-          'color: orange',
-          error
-        );
-      });
   }
+
+  //* -------------------------------------------------
+
+  //? Exécution des fonctions.
+
+  async function handleRegister(e) {
+    e.preventDefault();
+
+    try {
+      //
+
+      await imageCreator();
+
+      await authCreator();
+
+      await submitData();
+
+      // await backHome();
+
+      //
+    } catch (err) {
+      //
+      console.log('err :', err);
+    }
+  }
+
+  //? -------------------------------------------------
 
   return (
     <div className={styles.box}>
@@ -230,49 +228,84 @@ const SignUp = () => {
         <div className={styles.formInput}>
           <label className={styles.formInputLabel}>Prénom</label>
           <div className={styles.formInputBox}>
-            <input type="text" required ref={registerFirstName} />
+            <input
+              type="text"
+              required
+              onChange={(e) => setFirstName(e.target.value)}
+              // value={firstName}
+            />
           </div>
         </div>
 
         <div className={styles.formInput}>
           <label className={styles.formInputLabel}>Nom</label>
           <div className={styles.formInputBox}>
-            <input type="text" required ref={registerLastName} />
+            <input
+              type="text"
+              required
+              onChange={(e) => setLastName(e.target.value)}
+              // value={lastName}
+            />
           </div>
         </div>
 
         <div className={styles.formInput}>
           <label className={styles.formInputLabel}>Nom d’utilisateur</label>
           <div className={styles.formInputBox}>
-            <input type="text" required ref={registerUserName} />
+            <input
+              type="text"
+              required
+              onChange={(e) => setUserName(e.target.value)}
+              // value={userName}
+            />
           </div>
         </div>
 
         <div className={styles.formInput}>
           <label className={styles.formInputLabel}>Téléphone</label>
           <div className={styles.formInputBox}>
-            <input type="tel" required ref={registerPhone} />
+            <input
+              type="tel"
+              required
+              onChange={(e) => setPhone(e.target.value)}
+              // value={phone}
+            />
           </div>
         </div>
 
         <div className={styles.formInput}>
           <label className={styles.formInputLabel}>Ville</label>
           <div className={styles.formInputBox}>
-            <input type="text" required ref={registerTown} />
+            <input
+              type="text"
+              required
+              onChange={(e) => setTown(e.target.value)}
+              // value={town}
+            />
           </div>
         </div>
 
         <div className={styles.formInput}>
           <label className={styles.formInputLabel}>Email</label>
           <div className={styles.formInputBox}>
-            <input type="email" required ref={registerEmail} />
+            <input
+              type="email"
+              required
+              onChange={(e) => setEmail(e.target.value)}
+              // value={email}
+            />
           </div>
         </div>
 
         <div className={styles.formInput}>
           <label className={styles.formInputLabel}>Mot de passe</label>
           <div className={styles.formInputBox}>
-            <input type="password" required ref={registerPassword} />
+            <input
+              type="password"
+              required
+              onChange={(e) => setPassword(e.target.value)}
+              // value={password}
+            />
           </div>
         </div>
 

@@ -2,7 +2,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styles from '../../../styles/ReadProfile.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateLogedUser } from '../../actions/userCRUD.actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -11,32 +10,22 @@ import {
   deleteObject,
   uploadBytes,
   getDownloadURL,
+  getFirestore,
 } from 'firebase/storage';
+import { doc, updateDoc, setDoc } from 'firebase/firestore';
 import {
   getAuth,
   signOut,
   sendPasswordResetEmail,
   deleteUser,
 } from 'firebase/auth';
+import { db } from '../../../utils/firebase';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faRightFromBracket);
 
 const ReadProfil = () => {
   //
-
-  //! Les variables.
-
-  let data;
-  let uid;
-
-  let newUserImageFileName;
-  let date = new Date().getTime();
-  let photoURL;
-  let newPhotoURL;
-  let imageUrl;
-
-  //! -------------------------------------------------
 
   //! Les constantes.
 
@@ -47,8 +36,9 @@ const ReadProfil = () => {
 
   //! Recupération de l'utilisateur Uid.
 
-  const auth = getAuth();
+  let uid;
 
+  const auth = getAuth();
   const user = auth.currentUser;
   if (user !== null) {
     uid = user.uid;
@@ -246,17 +236,14 @@ const ReadProfil = () => {
 
   //! GESTION DE LA MISE À JOUR DU COMPTE D'UN UTILISATEUR.
 
-  //? Récupération des informations saisies pour la mise à jour.
+  //? Les fonctions.
 
-  const registerFirstName = useRef();
-  const registerLastName = useRef();
-  const registerUserName = useRef();
-  const registerPhone = useRef();
-  const registerTown = useRef();
+  //* Création de la nouvelle de l’utilisateur.
 
-  //? -------------------------------------------------
-
-  //? Logique pour la gestion de l'image.
+  let imageUrl;
+  let newPhotoURL;
+  let newUserImageFileName;
+  let date = new Date().getTime();
 
   const [postPicture, setPostPicture] = useState(null); //* Prévisualisation.
   const [imageUpload, setimageUpload] = useState(null); //* upload.
@@ -266,44 +253,47 @@ const ReadProfil = () => {
     setimageUpload(e.target.files[0]); //* upload.
   };
 
-  //? -------------------------------------------------
-
-  //? Les fonctions.
-
-  //* Création de la nouvelle de l’utilisateur.
-
   function imageCreatorUpdate() {
     return new Promise((resolve, reject) => {
       //
       if (userData) {
         //
-        let imageRef;
 
         if (imageUpload == null) {
           //  imageRef = ref(storage, `images/${'avatar' + date}`);
           console.log('Pas de nouvelle images chargée');
           resolve();
         } else {
-          imageRef = ref(storage, `images/${imageUpload.name + date}`);
-        }
-
-        uploadBytes(imageRef, imageUpload).then((snapshot) => {
           //
-          getDownloadURL(snapshot.ref).then((url) => {
-            //
-            newUserImageFileName = snapshot.ref._location.path_;
-            // console.log('newUserImageFileName :', newUserImageFileName);
+          const imageRef = ref(storage, `images/${imageUpload.name + date}`);
 
-            newPhotoURL = url;
+          uploadBytes(imageRef, imageUpload)
+            .then((snapshot) => {
+              //
+              getDownloadURL(snapshot.ref).then((url) => {
+                //
+                newUserImageFileName = snapshot.ref._location.path_;
+                console.log(
+                  '✅ %c SUCCÈS UpdateProfile ==> Création de la nouvelle image de l’utilisateur réussie :',
+                  'color: green',
+                  url
+                );
 
-            console.log(
-              '✅1️⃣ %c SUCCÈS ReadProfil ==> Création de la nouvelle de l’utilisateur réussie :',
-              'color: green',
-              url
-            );
-            resolve();
-          });
-        });
+                newPhotoURL = url;
+
+                resolve();
+              });
+            })
+            .catch((error) => {
+              console.log(
+                '❌ %c ERREUR UpdateProfile ==> Création de la nouvelle image de l’utilisateur échouée :',
+                'color: orange',
+                error
+              );
+
+              reject();
+            });
+        }
       } else {
         console.log(
           '❌1️⃣ %c ERREUR ReadProfil ==> Création de la nouvelle de l’utilisateur  :',
@@ -319,75 +309,98 @@ const ReadProfil = () => {
 
   //* Mise à jour des datas de l’utilisateur.
 
+  let data;
+  let photoURL;
+  let kepFirtName;
+  let kepLastName;
+  let kepUserName;
+  let kepPhone;
+  let kepTown;
+  let kepPhotoURL;
+  let kepUserImageFileName;
+
+  const [newFirtName, setNewFirtName] = useState(null);
+  const [newLastName, setNewLastName] = useState(null);
+  const [newUserName, setNewUserName] = useState(null);
+  const [newPhone, setPhoneName] = useState(null);
+  const [newTown, setNewTown] = useState(null);
+
   function userDataUpdator() {
     return new Promise((resolve, reject) => {
       //
 
-      // console.log('Prénom : ', registerFirstName.current.value);
-      // console.log('Nom : ', registerLastName.current.value);
-      // console.log('Nom d’utilisateur : ', registerUserName.current.value);
-      // console.log('Téléphone : ', registerPhone.current.value);
-      // console.log('Ville : ', registerTown.current.value);
+      kepFirtName = userData.firstName;
+      console.log('kepFirtName : ', kepFirtName);
+      kepLastName = userData.lastName;
+      kepUserName = userData.userName;
+      kepPhone = userData.phone;
+      kepTown = userData.town;
+      kepPhotoURL = userData.photoURL;
+      kepUserImageFileName = userData.userImageFileName;
 
       if (userData) {
         //
 
-        if (registerFirstName.current.value == '') {
-          firstName = firstName;
+        if (newFirtName == null) {
+          setNewFirtName(kepFirtName);
+          console.log('No data : ', newFirtName);
         } else {
-          firstName = registerFirstName.current.value;
+          firstName = newFirtName;
+          console.log('OK data : ', newFirtName);
         }
 
-        if (registerLastName.current.value == '') {
-          lastName = lastName;
+        if (newLastName == null) {
+          setNewLastName(kepLastName);
         } else {
-          lastName = registerLastName.current.value;
+          lastName = newLastName;
         }
 
-        if (registerUserName.current.value == '') {
-          userName = userName;
+        if (newUserName == null) {
+          setNewUserName(kepUserName);
         } else {
-          userName = registerUserName.current.value;
+          userName = newUserName;
         }
 
-        if (registerPhone.current.value == '') {
-          phone = phone;
+        if (newPhone == null) {
+          setPhoneName(kepPhone);
         } else {
-          phone = registerPhone.current.value;
+          phone = newPhone;
         }
 
-        if (registerTown.current.value == '') {
-          town = town;
+        if (newTown == null) {
+          setNewTown(kepTown);
         } else {
-          town = registerTown.current.value;
+          town = newTown;
         }
 
         if (imageUpload == null) {
-          photoURL = userData.photoURL;
-          userImageFileName = userData.userImageFileName;
+          photoURL = kepPhotoURL;
+          userImageFileName = kepUserImageFileName;
         } else {
           photoURL = newPhotoURL;
           userImageFileName = newUserImageFileName;
         }
 
-        data = {
+        // console.log('uid ==> ', uid);
+        // console.log('db ===> ', db);
+
+        const userData = doc(db, 'users', uid);
+
+        updateDoc(userData, {
           userId: uid,
           firstName,
           lastName,
           userName,
           phone,
           town,
-          photoURL,
           userImageFileName,
-        };
+          photoURL,
+        });
 
         console.log(
-          '✅2️⃣ %c SUCCÈS : SignUp ==> Données transmises : ',
-          'color:green',
-          data
+          '✅ %c SUCCÈS UpdateProfile ==> Mise à jour de la data de l’utilisateur :',
+          'color: green'
         );
-
-        dispatch(updateLogedUser(data, uid));
 
         resolve();
       } else {
@@ -483,13 +496,13 @@ const ReadProfil = () => {
     try {
       //
 
+      await imageDeletorUpdate();
+
       await imageCreatorUpdate();
 
       await userDataUpdator();
 
-      await imageDeletorUpdate();
-
-      await backToHome();
+      // await backToHome();
 
       //
     } catch (err) {
@@ -545,8 +558,7 @@ const ReadProfil = () => {
             <input
               className={styles.inputInfo}
               placeholder={firstName}
-              ref={registerFirstName}
-              required
+              onChange={(e) => setNewFirtName(e.target.value)}
             ></input>
           </div>
         </div>
@@ -557,8 +569,7 @@ const ReadProfil = () => {
             <input
               className={styles.inputInfo}
               placeholder={lastName}
-              ref={registerLastName}
-              required
+              onChange={(e) => setNewLastName(e.target.value)}
             ></input>
           </div>
         </div>
@@ -569,8 +580,7 @@ const ReadProfil = () => {
             <input
               className={styles.inputInfo}
               placeholder={userName}
-              ref={registerUserName}
-              required
+              onChange={(e) => setNewUserName(e.target.value)}
             ></input>
           </div>
         </div>
@@ -581,8 +591,7 @@ const ReadProfil = () => {
             <input
               className={styles.inputInfo}
               placeholder={phone}
-              ref={registerPhone}
-              required
+              onChange={(e) => setPhoneName(e.target.value)}
             ></input>
           </div>
         </div>
@@ -593,8 +602,7 @@ const ReadProfil = () => {
             <input
               className={styles.inputInfo}
               placeholder={town}
-              ref={registerTown}
-              required
+              onChange={(e) => setNewTown(e.target.value)}
             ></input>
           </div>
         </div>

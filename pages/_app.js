@@ -1,8 +1,9 @@
-import { app } from '../src/firebase';
+import { firebaseApp } from '../utils/firebase';
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import '../styles/globals.css';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
 import thunk from 'redux-thunk';
 import rootReducer from '../src/reducers';
 import { Provider } from 'react-redux';
@@ -15,7 +16,8 @@ config.autoAddCss = false;
 
 //! Fonction à jouer au démarrage.
 
-import { readUser } from '../src/actions/userCRUD.actions';
+// import { readUser } from '../src/actions/userCRUD.actions';
+import { readUser2 } from '../src/actions/userCRUD.actions';
 import { readAllPost } from '../src/actions/postCRUD.action';
 
 //! --------------------------------------------------
@@ -23,15 +25,16 @@ import { readAllPost } from '../src/actions/postCRUD.action';
 //! Outils de développement.
 
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { loadGetInitialProps } from 'next/dist/shared/lib/utils';
 
 //! --------------------------------------------------
 
 function MyApp({ Component, pageProps }) {
   //! Mise en place du useContext.
-  //
+
   const [firebaseUi, setFirebaseUi] = useState(null);
 
-  const auth = getAuth(app);
+  const auth = getAuth(firebaseApp);
 
   const fetchToken = async () => {
     //
@@ -46,7 +49,7 @@ function MyApp({ Component, pageProps }) {
         // );
       } else {
         console.log(
-          '%c ❌  ERREUR ==> _app ==> No user connected',
+          '%c ✅ SUCCÈS  ==> _app ==> Relance du processus',
           'color:orange'
         );
       }
@@ -67,7 +70,8 @@ function MyApp({ Component, pageProps }) {
   //! --------------------------------------------------
 
   useEffect(() => {
-    store.dispatch(readUser(firebaseUi));
+    // store.dispatch(readUser(firebaseUi));
+    store.dispatch(readUser2(firebaseUi));
     store.dispatch(readAllPost());
   }, [firebaseUi, store]);
 

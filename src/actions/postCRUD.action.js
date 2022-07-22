@@ -1,5 +1,5 @@
 import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
-import db from '../../utils/firebase';
+import { db } from '../../utils/firebase';
 
 export const ADD_POST = 'ADD_POST';
 export const READ_ALL_POSTS = 'READ_ALL_POSTS';

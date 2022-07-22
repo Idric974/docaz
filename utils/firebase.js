@@ -4,12 +4,12 @@ import { getAuth, onAuthStateChanged, getRedirectResult } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore'; //? ===> Cloud Firestore.
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBZi_qOc7fUfxakGhRk5ORTCMwEALM6eSE',
-  authDomain: 'docaz-cb118.firebaseapp.com',
-  projectId: 'docaz-cb118',
-  storageBucket: 'docaz-cb118.appspot.com',
-  messagingSenderId: '483761721917',
-  appId: '483761721917',
+  apiKey: process.env.NEXT_PUBLIC_APIKEY,
+  authDomain: process.env.NEXT_PUBLIC_AUTHDOMAIN,
+  projectId: process.env.NEXT_PUBLIC_PROJECTID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGEBUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGINGSENDERID,
+  appId: process.env.NEXT_PUBLIC_APPID,
 };
 
 //? Initialize Firebase

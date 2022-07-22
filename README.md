@@ -3,3 +3,4 @@ NEXT_PUBLIC_ANALYTICS_URL=http://localhost:5000/
 
 ${process.env.NEXT_PUBLIC_ANALYTICS_URL}
 test
+Ok pour les test

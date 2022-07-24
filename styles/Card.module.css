@@ -5,7 +5,8 @@
 .postBody,
 .postItems,
 .postPictureBox,
-.postPictureInstructions {
+.postPictureInstructions,
+.postPictureBoxPre {
   /* height: 300px; */
   /* border: solid red 1px; */
   width: 100%;
@@ -129,13 +130,14 @@
 
 .postPictureBox {
   /* border: solid red 1px; */
-  border-bottom: solid var(--Primary) 1px;
+  width: 98%;
+  border: solid var(--Primary) 1px;
+  border-radius: 10px;
+  justify-content: center;
+  margin-top: 10px;
 }
 
 .postPictureInstructions {
-  align-items: flex-start;
-  padding-left: 10px;
-  flex-direction: row;
   margin: 5px 0px 5px 0px;
   font-size: 1.5rem;
   margin: 10px 0px 10px 0px;
@@ -178,9 +180,9 @@
 
 .postPicture {
   /* border: solid green 1px; */
-  width: 99%;
-  border-radius: 3px;
-  margin-bottom: 10px;
+  width: 100%;
+  border-radius: 0px 0px 10px 10px;
+  margin-bottom: 0px;
 }
 
 /** Like barre  **/
@@ -262,4 +264,47 @@
   width: 45%;
   height: 65px;
   justify-content: center;
+}
+
+.inputImageBox {
+  /* border: solid red 1px; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0px 0px 0px;
+  text-align: center;
+}
+
+.inputImageLabel {
+  width: 250px;
+  height: 40px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* position: absolute; */
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0px 10px 0px 10px;
+  border-radius: 10px;
+  background-color: var(--Primary);
+  box-shadow: 0 0px 6px black;
+  font-size: 20px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.inputImageLabel:hover {
+  box-shadow: 0 0px 4px black;
+  transition: color 0.5s ease-out;
+  color: var(--Secondary);
+}
+
+.inputImageLabel:active {
+  box-shadow: 0 0px 4px black;
 }

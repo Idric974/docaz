@@ -283,6 +283,10 @@ input::placeholder {
   font-size: 1.5rem;
 }
 
+input[type='file'] {
+  display: none;
+}
+
 /**➖➖➖➖➖➖➖➖➖➖➖➖**/
 
 /**➖➖➖➖➖ Label ➖➖➖➖➖**/

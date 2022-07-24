@@ -3,26 +3,44 @@ import styles from '../../../styles/PostHandler.module.css';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { timestampParser } from '../../utils/Utils';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../../firebase';
-import { auth } from '../../firebase.config';
-import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../../../utils/firebase';
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  storage,
+  getStorage,
+} from 'firebase/storage';
+import { getAuth, signOut, updateEmail } from 'firebase/auth';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../../../firebase/firebase';
 
 const CreatePost = () => {
   //
 
-  //! Récupération du uid de l'utilisateur connecté.
+  //! Recupération de l'utilisateur Uid.
 
-  let uid = auth._delegate.currentUser.uid;
-  // console.log('posterId : ', uid);
+  let uid;
+
+  const auth = getAuth();
+  const user = auth.currentUser;
+  if (user !== null) {
+    uid = user.uid;
+    // console.log('uid du currentUser ===> ', user.uid);
+    // console.log('email du currentUser ===> ', user.email);
+  }
+
+  //! -------------------------------------------------
+
+  //! Les constantes.
+
+  const storage = getStorage();
 
   //! -------------------------------------------------
 
   //! Récupér le profile de l'utilisateur connecté.
 
   const userData = useSelector((state) => state.userCRUDReducer);
-  console.log('userData', userData);
+  // console.log('userData', userData);
 
   //! -------------------------------------------------
 
@@ -63,10 +81,12 @@ const CreatePost = () => {
   //! LOGIQUE POUR LA CREATION D'UN POST.
 
   let date = new Date().getTime();
+  let postTimestamp = Date.now();
+  // console.log('postTimestamp :', postTimestamp);
+  // console.log('postTimestamp Type :', typeof postTimestamp);
   let postDate = timestampParser(Date.now());
   let imageUrl;
   let data;
-
   let userImageFileName;
 
   //? les fonctions.
@@ -81,15 +101,20 @@ const CreatePost = () => {
 
       uploadBytes(imageRef, imageUpload)
         .then((snapshot) => {
+          //
           getDownloadURL(snapshot.ref).then((url) => {
             //
+
             userImageFileName = snapshot.ref._location.path_;
+
             console.log(
               '✅ %c SUCCÈS Create post ==> Création de la nouvelle image de l’utilisateur réussie :',
               'color: green',
               url
             );
+
             imageUrl = url;
+
             resolve();
           });
         })
@@ -126,6 +151,8 @@ const CreatePost = () => {
           imageUrl,
           postDate,
           userImageFileName,
+          timestamp: serverTimestamp(),
+          postTimestamp,
         })
           .then((data) => {
             console.log(
@@ -139,6 +166,8 @@ const CreatePost = () => {
               'color: green',
               docRef.id
             );
+
+            resolve();
           })
           .catch((e) => {
             console.log(
@@ -147,8 +176,6 @@ const CreatePost = () => {
               e
             );
           });
-
-        resolve();
       } else {
         console.log(
           '❌ %c ERREUR Create post ==> Transmission des données',
@@ -196,7 +223,7 @@ const CreatePost = () => {
 
       await submitData();
 
-      // await backHome();
+      await backHome();
 
       //
     } catch (err) {
@@ -292,10 +319,13 @@ const CreatePost = () => {
         />
 
         <div className={styles.inputImageBox}>
+          <label className={styles.inputImageLabel} htmlFor="inputfile">
+            Télécharger une photo
+          </label>
           <input
             className={styles.inputImage}
             type="file"
-            id="file-upload"
+            id="inputfile"
             name="file"
             accept=".jpg, .jpeg, .png"
             onChange={(e) => handlePicture(e)}

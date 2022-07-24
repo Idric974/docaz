@@ -1,13 +1,22 @@
 import axios from 'axios';
-import { collection, doc, getDoc } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  query,
+  where,
+  getDocs,
+  getDoc,
+  orderBy,
+} from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { db } from '../../utils/firebase';
+import { db } from '../../firebase/firebase';
 
 export const CREATE_USER = 'CREATE_USER';
 export const READ_USER = 'READ_USER';
 export const READ_USER2 = 'READ_USER2';
 export const UPDATE_USER = 'UPDATE_USER';
 export const DELETE_USER = 'DELETE_USER';
+export const READ_USERS_POSTS = 'READ_USERS_POSTS';
 
 //! Logique pour récupérer le uid de l'utilisateur connecté.
 
@@ -15,7 +24,7 @@ export const DELETE_USER = 'DELETE_USER';
 
 let userData;
 
-export const readUser2 = (firebaseUi) => {
+export const readUser = (firebaseUi) => {
   return async (dispatch) => {
     if (firebaseUi) {
       const docRef = doc(db, 'users', firebaseUi);
@@ -28,37 +37,9 @@ export const readUser2 = (firebaseUi) => {
       } else {
         console.log('No such document!');
       }
-    } else {
-      console.log('Problème');
     }
   };
 };
-
-// export const readUser = (firebaseUi) => {
-//   // console.log('userCRUD.actions ===> firebaseUi :', firebaseUi);
-//   return async (dispatch) => {
-//     try {
-//       const res = await axios.get(
-//         `${process.env.NEXT_PUBLIC_ANALYTICS_URL}api/user/readOneUser/` +
-//           firebaseUi
-//       );
-
-//       // console.log(
-//       //   "✅ %c SUCCÈS userCRUD.actions ==> READ_USER ==> afficher l'utilisateur connecté :",
-//       //   'color: green',
-//       //   res.data
-//       // );
-
-//       dispatch({ type: READ_USER, payload: res.data });
-//     } catch (err) {
-//       return console.log(
-//         "❌ %c ERREUR : userCRUD.actions ==> READ_USER ==> afficher l'utilisateur connecté :",
-//         'color : red',
-//         err
-//       );
-//     }
-//   };
-// };
 
 //! -------------------------------------------------
 

@@ -1,9 +1,8 @@
-import { firebaseApp } from '../utils/firebase';
+import { firebaseApp } from '../firebase/firebase';
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import '../styles/globals.css';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-
 import thunk from 'redux-thunk';
 import rootReducer from '../src/reducers';
 import { Provider } from 'react-redux';
@@ -16,9 +15,9 @@ config.autoAddCss = false;
 
 //! Fonction à jouer au démarrage.
 
-// import { readUser } from '../src/actions/userCRUD.actions';
-import { readUser2 } from '../src/actions/userCRUD.actions';
+import { readUser } from '../src/actions/userCRUD.actions';
 import { readAllPost } from '../src/actions/postCRUD.action';
+import { readUsersPost } from '../src/actions/userEvents.actions';
 
 //! --------------------------------------------------
 
@@ -41,20 +40,17 @@ function MyApp({ Component, pageProps }) {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setFirebaseUi(user.uid);
-
-        // console.log(
-        //   '%c ✅ SUCCÈS ==> _app.js ==> ID de l"utilisateur connecté : ',
-        //   'color: green',
-        //   firebaseUi
-        // );
-      } else {
-        console.log(
-          '%c ✅ SUCCÈS  ==> _app ==> Relance du processus',
-          'color:orange'
-        );
       }
     });
   };
+
+  useEffect(() => {
+    // console.log(
+    //   "%c ✅ SUCCÈS ==> _app.js ==> uid de l'utilisateur connecté : ",
+    //   'color: green',
+    //   firebaseUi
+    // );
+  }, [firebaseUi]);
 
   fetchToken();
 
@@ -70,9 +66,9 @@ function MyApp({ Component, pageProps }) {
   //! --------------------------------------------------
 
   useEffect(() => {
-    // store.dispatch(readUser(firebaseUi));
-    store.dispatch(readUser2(firebaseUi));
     store.dispatch(readAllPost());
+    store.dispatch(readUser(firebaseUi));
+    store.dispatch(readUsersPost(firebaseUi));
   }, [firebaseUi, store]);
 
   return (

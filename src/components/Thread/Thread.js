@@ -11,7 +11,7 @@ const Thread = () => {
   const [loadPost, setLoadPost] = useState(true);
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.postCRUDReducer);
-  //console.log('⭐ CompThread ===>  Les posts :', posts);
+  // console.log('⭐ CompThread ===>  Les posts :', posts);
 
   useEffect(() => {
     if (loadPost) {
@@ -25,7 +25,7 @@ const Thread = () => {
       <ul className={styles.postBoxDiv}>
         {!isEmpty(posts[0]) &&
           posts.map((post) => {
-            return <Card post={post} key={post.postDate} />;
+            return <Card post={post} key={post.postTimestamp} />;
           })}
       </ul>
     </div>

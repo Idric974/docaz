@@ -1,11 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useRef, useState } from 'react';
 import styles from '../../../styles/SingUp.module.css';
-import { collection, addDoc, doc, setDoc } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../../firebase';
+import {
+  collection,
+  addDoc,
+  doc,
+  setDoc,
+  serverTimestamp,
+} from 'firebase/firestore';
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  storage,
+  getStorage,
+} from 'firebase/storage';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { db } from '../../../utils/firebase';
+import { db } from '../../../firebase/firebase';
 
 const SignUp = () => {
   //
@@ -18,6 +29,12 @@ const SignUp = () => {
   let photoURL;
   let imageUrl;
   let userImageFileName;
+
+  //! -------------------------------------------------
+
+  //! Les constantes.
+
+  const storage = getStorage();
 
   //! -------------------------------------------------
 
@@ -54,11 +71,13 @@ const SignUp = () => {
           getDownloadURL(snapshot.ref).then((url) => {
             //
             userImageFileName = snapshot.ref._location.path_;
-            console.log(
-              '✅ %c SUCCÈS Create post ==> Création de la nouvelle image de l’utilisateur réussie :',
-              'color: green',
-              url
-            );
+
+            // console.log(
+            //   '✅ %c SUCCÈS Create post ==> Création de la nouvelle image de l’utilisateur réussie :',
+            //   'color: green',
+            //   url
+            // );
+
             photoURL = url;
             resolve();
           });
@@ -90,11 +109,12 @@ const SignUp = () => {
         .then(async (userAuth) => {
           uid = userAuth.user.auth.currentUser.auth.currentUser.uid;
 
-          console.log(
-            "✅ %c SUCCÈS Create post ==> Création de l'utilisateur pour son authentification réussie : ",
-            'color: green',
-            uid
-          );
+          // console.log(
+          //   "✅ %c SUCCÈS Create post ==> Création de l'utilisateur pour son authentification réussie : ",
+          //   'color: green',
+          //   uid
+          // );
+
           resolve();
         })
         .catch((e) => {
@@ -132,12 +152,14 @@ const SignUp = () => {
           userImageFileName,
           photoURL:
             'https://firebasestorage.googleapis.com/v0/b/docaz-cb118.appspot.com/o/images%2FAvatar%2FpersonaDocaz.jpg?alt=media&token=dedeb9f7-c9b4-41e6-bc7e-2dc45d233230',
+          timestamp: serverTimestamp(),
         })
           .then((data) => {
-            console.log(
-              '✅ %c SUCCÈS Create post ==> Transmission des données : ',
-              'color: green'
-            );
+            // console.log(
+            //   '✅ %c SUCCÈS Create post ==> Transmission des données : ',
+            //   'color: green'
+            // );
+
             resolve();
           })
           .catch((e) => {
@@ -160,6 +182,7 @@ const SignUp = () => {
           email,
           userImageFileName,
           photoURL,
+          timestamp: serverTimestamp(),
         })
           .then(() => {
             // console.log('data : ', data);
@@ -309,16 +332,33 @@ const SignUp = () => {
           </div>
         </div>
 
-        <div className={styles.formInputImage}>
-          <label className={styles.formInputLabel}>Votre image de profil</label>
+        {/* <div className={styles.formInputImage}>
+          <label className={styles.formInputLabel} htmlFor="inputfile">
+            Votre image de profil
+          </label>
           <div className={styles.formInputBox}>
             <input
               className={styles.inputImage}
               type="file"
+              id="inputfile"
               accept=".jpg, .jpeg, .png"
               onChange={(e) => handlePicture(e)}
             />
           </div>
+        </div> */}
+
+        <div className={styles.inputImageBox}>
+          <label className={styles.inputImageLabel} htmlFor="inputfile">
+            Télécharger une photo
+          </label>
+          <input
+            className={styles.inputImage}
+            type="file"
+            id="inputfile"
+            name="file"
+            accept=".jpg, .jpeg, .png"
+            onChange={(e) => handlePicture(e)}
+          />
         </div>
 
         {/** Image de l'article **/}

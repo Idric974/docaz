@@ -11,7 +11,7 @@ import {
   deleteObject,
 } from 'firebase/storage';
 import { doc, deleteDoc, setDoc, updateDoc } from 'firebase/firestore';
-import { db } from '../../../utils/firebase';
+import { db } from '../../../firebase/firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faSpinner, faPhone } from '@fortawesome/free-solid-svg-icons';
@@ -274,7 +274,7 @@ const Card = ({ post }) => {
 
       await submitData();
 
-      await backHome();
+      // await backHome();
 
       //
     } catch (err) {
@@ -341,8 +341,7 @@ const Card = ({ post }) => {
           .then(() => {
             console.log(
               '✅ %c SUCCÈS Delete post ==> Suppression de la data du post réussie :',
-              'color: green',
-              desertRef
+              'color: green'
             );
             resolve();
           })
@@ -532,27 +531,34 @@ const Card = ({ post }) => {
               </div>
 
               {/**  Nouvelle image du post **/}
-              <div className={styles.postItems}>
-                <div className={styles.postPictureBox}>
-                  <p className={styles.postPictureInstructions}>
-                    Choisire une nouvelle image pour votre annonce
-                  </p>
 
-                  <input
-                    className={styles.postPicture}
-                    type="file"
-                    accept=".jpg, .jpeg, .png"
-                    onChange={(e) => handlePicture(e)}
-                  />
+              <div className={styles.inputImageBox}>
+                <label className={styles.inputImageLabel} htmlFor="inputfile">
+                  Télécharger une photo
+                </label>
+                <input
+                  className={styles.inputImage}
+                  type="file"
+                  id="inputfile"
+                  name="file"
+                  accept=".jpg, .jpeg, .png"
+                  onChange={(e) => handlePicture(e)}
+                />
+              </div>
 
+              <div className={styles.postPictureBoxPre}>
+                {imageUpload ? (
                   <div className={styles.postPictureBox}>
+                    <p className={styles.postPictureInstructions}>
+                      Nouvelle image du post
+                    </p>
                     <img
                       className={styles.postPicture}
                       src={postPicture}
                       alt="card-pic"
                     />
                   </div>
-                </div>
+                ) : null}
               </div>
             </div>
 

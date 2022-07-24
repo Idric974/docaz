@@ -19,7 +19,7 @@ import {
   sendPasswordResetEmail,
   deleteUser,
 } from 'firebase/auth';
-import { db } from '../../../utils/firebase';
+import { db } from '../../../firebase/firebase';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faRightFromBracket);
@@ -608,38 +608,73 @@ const ReadProfil = () => {
         </div>
 
         <div className={styles.usersInfo}>
-          <label className={styles.formInputLabel}>Votre image de profil</label>
-          <div className={styles.formInputBox}>
+          {/* <label className={styles.formInputLabel}>Votre image de profil</label> */}
+          {/* <div className={styles.formInputBox}>
             <input
               className={styles.inputImage}
               type="file"
               accept=".jpg, .jpeg, .png"
               onChange={(e) => handlePicture(e)}
             />
-          </div>
-        </div>
+          </div> */}
 
-        {/** Image de l'article **/}
-        <div className={styles.prewieuImageBox}>
-          <p>Nouvelle image</p>
-          <div>
+          {/**  *********************************** **/}
+          {/** Image de l'article **/}
+          {/* <div className={styles.prewieuImageBox}>
+            <p>Nouvelle image</p>
+            <div>
+              <img
+                className={styles.prewieuImage}
+                src={postPicture}
+                alt="card-pic"
+              />
+            </div>
+          </div> */}
+
+          <div className={styles.usersInfoImageBox}>
+            <p>Photo de profil actuelle</p>
             <img
-              className={styles.prewieuImage}
-              src={postPicture}
-              alt="card-pic"
+              className={styles.usersInfoImage}
+              src={imageProfil}
+              alt="user-pic"
             />
           </div>
         </div>
 
-        <div className={styles.usersInfoImageBox}>
-          <p>Image actuelle</p>
-          <img
-            className={styles.usersInfoImage}
-            src={imageProfil}
-            alt="user-pic"
+        {/**  *********************************** **/}
+
+        {/**  Nouvelle image du post **/}
+
+        <div className={styles.inputImageBox}>
+          <label className={styles.inputImageLabel} htmlFor="inputfile">
+            Télécharger une photo
+          </label>
+          <input
+            className={styles.inputImage}
+            type="file"
+            id="inputfile"
+            name="file"
+            accept=".jpg, .jpeg, .png"
+            onChange={(e) => handlePicture(e)}
           />
         </div>
+
+        <div className={styles.postPictureBoxPre}>
+          {imageUpload ? (
+            <div className={styles.postPictureBox}>
+              <p className={styles.postPictureInstructions}>
+                Nouvelle image du post
+              </p>
+              <img
+                className={styles.postPicture}
+                src={postPicture}
+                alt="imageProfil"
+              />
+            </div>
+          ) : null}
+        </div>
       </div>
+      {/**  *********************************** **/}
 
       <div className={styles.buttonBox} onClick={handleDeleteButtonUpDate}>
         <button className={styles.profileButton}>

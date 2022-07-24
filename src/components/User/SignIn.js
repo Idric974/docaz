@@ -16,59 +16,79 @@ const SignIn = () => {
 
   //! Logique pour la connexion d'un utiliateur.
 
+  //? les fonctions.
+
+  //* Authentification de l’utilisateur.
+
+  function signInApp() {
+    return new Promise((resolve, reject) => {
+      //
+      // console.log('Email : ', registerEmail.current.value);
+      // console.log('Password : ', registerPassword.current.value);
+
+      signInWithEmailAndPassword(
+        auth,
+        registerEmail.current.value,
+        registerPassword.current.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+
+          // console.log(
+          //   '%c ✅ SUCCÈS : SignIn ===> User connected :',
+          //   'color: green',
+          //   user
+          // );
+
+          resolve();
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+
+          console.log(
+            '%c ❌ ERREUR : SignIn ===> User connected : :',
+            'color: orange',
+            errorCode
+          );
+
+          const errorMessage = error.message;
+
+          console.log(
+            '%c ❌ ERREUR : SignIn ===> errorMessage : :',
+            'color: red',
+            errorMessage
+          );
+
+          document.getElementById('signInError').innerHTML =
+            'Le mot de passe ou l’identifiant saisi est incorrecte';
+          document.getElementById('signInError').style.color = 'red';
+          document.getElementById('signInError').style.fontSize = '1.5rem';
+
+          reject();
+        });
+    });
+  }
+
+  //* -------------------------------------------------
+
+  //? Exécution des fonctions.
+
   async function handleRegister(e) {
     e.preventDefault();
-    console.log('Email : ', registerEmail.current.value);
-    console.log('Password : ', registerPassword.current.value);
 
-    signInWithEmailAndPassword(
-      auth,
-      registerEmail.current.value,
-      registerPassword.current.value
-    )
-      .then((userCredential) => {
-        const user = userCredential.user;
+    try {
+      //
 
-        console.log(
-          '%c ✅ SUCCÈS : SignIn ===> User connected :',
-          'color: green',
-          user
-        );
+      await signInApp();
 
-        document.getElementById('signInError').innerHTML =
-          "Connexion réussi, vous allez être redirigé ver la page d'accueil";
-        document.getElementById('signInError').style.color = 'green';
-        document.getElementById('signInError').style.fontSize = '1.5rem';
-
-        setTimeout(() => {
-          window.location = '/';
-        }, 5000);
-
-        //
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-
-        console.log(
-          '%c ❌ ERREUR : SignIn ===> User connected : :',
-          'color: red',
-          errorCode
-        );
-
-        const errorMessage = error.message;
-
-        console.log(
-          '%c ❌ ERREUR : SignIn ===> errorMessage : :',
-          'color: red',
-          errorMessage
-        );
-
-        document.getElementById('signInError').innerHTML =
-          'Le mot de passe ou l’identifiant saisi est incorrecte';
-        document.getElementById('signInError').style.color = 'red';
-        document.getElementById('signInError').style.fontSize = '1.5rem';
-      });
+      //
+    } catch (err) {
+      //
+      console.log('err :', err);
+    }
   }
+
+  //? -------------------------------------------------
 
   //! -------------------------------------------------
 

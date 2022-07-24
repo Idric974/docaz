@@ -1,13 +1,13 @@
-// import { GET_USER } from '../actions/userCRUD.actions';
+import { READ_USERS_POSTS } from '../actions/userEvents.actions';
 
 const initialState = {};
 
-// export default function userReducer(state = initialState, action) {
-//   switch (action.type) {
-//     case GET_USER:
-//       return action.payload;
+export default function userEventsReducer(state = initialState, action) {
+  switch (action.type) {
+    case READ_USERS_POSTS:
+      return action.payload;
 
-//     default:
-//       return state;
-//   }
-// }
+    default:
+      return state;
+  }
+}

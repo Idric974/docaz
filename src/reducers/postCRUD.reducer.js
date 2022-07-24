@@ -6,7 +6,7 @@ import {
 
 const initialState = {};
 
-export default function postReducer(state = initialState, action) {
+export default function userCRUDReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_POST:
       return [action.payload, ...state];

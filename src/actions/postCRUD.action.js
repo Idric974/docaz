@@ -1,9 +1,16 @@
-import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
-import { db } from '../../utils/firebase';
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  orderBy,
+  limit,
+} from 'firebase/firestore';
+import { db } from '../../firebase/firebase';
 
 export const ADD_POST = 'ADD_POST';
 export const READ_ALL_POSTS = 'READ_ALL_POSTS';
-export const READ_USERS_POSTS = 'READ_ALL_POSTS';
+export const READ_USERS_POSTS = 'READ_USERS_POSTS';
 export const UPDATE_POST = 'UPDATE_POST';
 export const DELETE_POST = 'DELETE_POST';
 
@@ -16,7 +23,7 @@ export const readAllPost = () => {
     try {
       const querySnapshot = await getDocs(
         collection(db, 'posts'),
-        orderBy('postDate', 'desc')
+        orderBy('postTimestamp', 'desc')
       );
 
       let product = [];
@@ -37,10 +44,16 @@ export const readAllPost = () => {
             uid: doc.data().uid,
             userName: doc.data().userName,
             postId: doc.id,
+            timestamp: doc.data().timestamp,
+            postTimestamp: doc.data().postTimestamp,
           })
         );
 
-        // console.log('All posts :', product);
+        // console.log(
+        //   '%c✅ SUCCÈS : postCRUD.actions ==> READ_ALL_POSTS ==> La liste de tous les posts :',
+        //   'color: green',
+        //   product
+        // );
 
         dispatch({
           type: READ_ALL_POSTS,
@@ -61,6 +74,8 @@ export const readAllPost = () => {
 
 //! Logique pour la lecture des posts de l'utilisateur connecté.
 
+let userPostsData;
+
 export const readUsersPost = (uid) => {
   return async (dispatch) => {
     try {
@@ -68,11 +83,11 @@ export const readUsersPost = (uid) => {
 
       const querySnapshot = await getDocs(q);
 
-      let product = [];
-      let data;
+      let userPosts = [];
+
       querySnapshot.forEach((doc) => {
-        product.push(
-          (data = {
+        userPosts.push(
+          (userPostsData = {
             brand: doc.data().brand,
             description: doc.data().description,
             imageUrl: doc.data().imageUrl,
@@ -88,15 +103,15 @@ export const readUsersPost = (uid) => {
           })
         );
 
-        // console.log(
-        //   "%c✅ SUCCÈS : postCRUD.actions ==> READ_USERS_POSTS ==> Liste de tous les posts de l'utilisateur connecté :",
-        //   'color: green',
-        //   data
-        // );
+        console.log(
+          "%c✅ SUCCÈS : postCRUD.actions ==> READ_USERS_POSTS ==> La liste de tous les posts de l'utilisateur connecté :",
+          'color: green',
+          userPosts
+        );
 
         dispatch({
           type: READ_USERS_POSTS,
-          payload: product,
+          payload: userPosts,
         });
       });
     } catch (err) {

@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import styles from '../../../styles/MesPosts.module.css';
 import { getAuth } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
-import { readUsersPost } from '../../../src/actions/postCRUD.action';
 import UpdatePost from '../../components/Post/UpdatePost';
+import readUsersPost from '../../../src/actions/postCRUD.action';
 import { isEmpty } from '../../../src/utils/Utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -15,18 +15,14 @@ library.add(faArrowLeftLong);
 const MesPosts = () => {
   //
 
-  //!Les variables.
+  //! Les constantes.
 
   let uid;
-
-  //! -------------------------------------------------
-
-  //! Les constantes.
 
   const auth = getAuth();
   const user = auth.currentUser;
   if (user) {
-    // console.log('MesPosts ==> currentUser : ', user.uid);
+    console.log('MesPosts ==> currentUser : ', user.uid);
     uid = user.uid;
   }
 
@@ -51,18 +47,13 @@ const MesPosts = () => {
 
   //? --------------------------------------------------
 
-  //?
-
   //? Chargement des posts.
 
-  const dispatch = useDispatch();
-
-  const posts = useSelector((state) => state.postCRUDReducer);
-  // console.log('MesPosts ==> Liste des posts ===> ', posts);
+  const posts = useSelector((state) => state.userEventsReducer);
 
   useEffect(() => {
-    dispatch(readUsersPost(uid));
-  }, [dispatch, uid]);
+    console.log('MesPosts ==> Liste des posts ===> ', posts);
+  }, [posts]);
 
   //? --------------------------------------------------
 

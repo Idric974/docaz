@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useRef } from 'react';
-import styles from '../../../styles/SignIn.module.css';
+import styles from './SignIn.module.css';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 const SignIn = () => {

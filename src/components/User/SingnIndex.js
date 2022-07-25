@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from '../../../styles/SingnIndex.module.css';
+import styles from './SingnIndex.module.css';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useSelector } from 'react-redux';
 import ReadProfileIndex from './ReadProfileIndex';

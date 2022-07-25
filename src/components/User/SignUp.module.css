@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
+.box,
+.formTitle,
+.formInputBox,
+.formInput,
+.formInputImage,
+.formInputButtonBox,
+.formInputButton,
+.formItems,
+.prewieuImageBox,
+.prewieuImage {
+  /* border: solid red 1px; */
+  /* height: 100vh;  */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+}
+
+.box {
+  border-top: solid var(--Primary) 2px;
+}
+
+.formItems {
+  margin-top: 20px;
+}
+
+.formInputLabel {
+  /* border: solid green 1px; */
+  margin-left: 5px;
+}
+
+.formInput,
+.formInputImage {
+  /* border: solid red 1px; */
+  align-items: flex-start;
+}
+
+.formInputImage {
+  /* border: solid red 1px; */
+  width: 100%;
+}
+
+.inputImage {
+  /* border: solid red 1px; */
+  width: 100%;
+}
+
+.formInputButtonBox {
+  margin: auto;
+}
+
+.formInputButton {
+  background-color: var(--Primary);
+}
+
+.inputImageLabel {
+  width: 250px;
+  height: 40px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* position: absolute; */
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0px 10px 0px 10px;
+  border-radius: 10px;
+  background-color: var(--Primary);
+  box-shadow: 0 0px 6px black;
+  font-size: 20px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.inputImageLabel:hover {
+  box-shadow: 0 0px 4px black;
+  transition: color 0.5s ease-out;
+  color: var(--Secondary);
+}
+
+.inputImageLabel:active {
+  box-shadow: 0 0px 4px black;
+}

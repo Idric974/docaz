@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import styles from '../../../styles/PostHandler.module.css';
+import styles from './CreatePost.module.css';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { timestampParser } from '../../utils/Utils';

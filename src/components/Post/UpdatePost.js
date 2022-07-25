@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import styles from '../../../styles/Card.module.css';
+import styles from './UpdatePost.module.css';
 import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { dateParser } from '../../utils/Utils';

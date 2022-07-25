@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import styles from '../../../styles/NavBar.module.css';
+import styles from './NavBar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {

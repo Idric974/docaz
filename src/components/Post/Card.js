@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import styles from '../../../styles/Card.module.css';
+import styles from './Card.module.css';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { dateParser, isEmpty } from '../../utils/Utils';

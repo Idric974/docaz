@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import styles from '../styles/index.module.css';
+import styles from './index.module.css';
+import masterStyles from '../styles/Master.module.css';
 import Logo from '../src/components/Logo/Logo';
-import Thread from '../src/components/Thread/Thread';
+import ThreadPosts from '../src/components/Post/ThreadPosts';
 import CreatePost from '../src/components/Post/CreatePost';
 import Favorites from '../src/components/Favorites/Favorites';
 import SingnIndex from '../src/components/User/SingnIndex';
@@ -55,7 +56,7 @@ export default function Home(props) {
   };
 
   return (
-    <div className={styles.box}>
+    <div className={masterStyles.box}>
       <Logo></Logo>
       <div className={styles.appMenu}>
         {/* ' '  */}
@@ -101,7 +102,7 @@ export default function Home(props) {
         </div>
       </div>
       <div className={styles.appBody}>
-        {threadModal && <Thread />}
+        {threadModal && <ThreadPosts />}
         {createPostModal && <CreatePost />}
         {favoritesModal && <Favorites />}
         {accountModal && <SingnIndex />}

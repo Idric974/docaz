@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from 'react';
-import styles from '../../../styles/MesPosts.module.css';
+import styles from './MesPosts.module.css';
 import { getAuth } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import UpdatePost from '../../components/Post/UpdatePost';

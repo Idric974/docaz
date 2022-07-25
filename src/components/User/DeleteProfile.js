@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../../styles/DeleteProfile.module.css';
+import styles from './DeleteProfile.module.css';
 import { getAuth, deleteUser, signOut } from 'firebase/auth';
 import { getStorage, ref, deleteObject } from 'firebase/storage';
 import { useSelector, useDispatch } from 'react-redux';

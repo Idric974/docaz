@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState, useRef } from 'react';
-import styles from '../../../styles/UpdateProfile.module.css';
+import styles from './UpdateProfile.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateLogedUser } from '../../actions/userCRUD.actions';
 import { getAuth, signOut, updateEmail } from 'firebase/auth';

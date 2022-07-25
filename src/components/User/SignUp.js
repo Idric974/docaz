@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useRef, useState } from 'react';
-import styles from '../../../styles/SingUp.module.css';
+import styles from './SignUp.module.css';
 import {
   collection,
   addDoc,

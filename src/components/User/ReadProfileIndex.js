@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from '../../../styles/ReadProfileIndex.module.css';
+import styles from './ReadProfileIndex.module.css';
 import { useSelector } from 'react-redux';
 import ReadProfil from './ReadProfil';
 import MesPosts from '../Post/MesPosts';
